@@ -19,10 +19,21 @@ double division(double a, double b)
 
 int main()
 {
+	int x = 100 , y;
+	double result = 0;
 
-	std::cout << division(10,0) << std::endl;
-
-
+	try
+	{
+		result = division(x, y);
+		std::cout << result << std::endl;
+	}
+	catch(const char *msg)
+	{
+		std::cerr << msg << std::endl;
+	
+	}
+	
+	return 0;
 
 
 }
