@@ -19,7 +19,7 @@ double division(double a, double b)
 
 int main()
 {
-	int x = 100 , y;
+	int x = 100 , y = 0;
 	double result = 0;
 
 	try
