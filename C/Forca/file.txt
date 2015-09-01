@@ -1,0 +1,7 @@
+
+# Digite # para fazer um comentario no arquivo de palavras, para digitar as palavras primeiro de a palavra e depois a dica entre chaves { }, Exemplo:
+#Palavra1 {dica da palavra1}
+
+
+Palavra1 {dica da palavra1}
+Palavra2 {dica da palavra2}
