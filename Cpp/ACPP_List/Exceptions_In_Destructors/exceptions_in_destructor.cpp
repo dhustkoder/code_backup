@@ -94,6 +94,14 @@ int main()
 	Dog *dog1 = new Dog("barao");
 	Dog *dog2 = new Dog("Pitoco");
 
+
+	try{
+		// use the dogs...
+	}catch(...){
+	
+	}
+	
+	// destroy the dogs...
 	try{
 		dog1->PrepareToDestr();
 		delete dog1;
