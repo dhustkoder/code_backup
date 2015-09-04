@@ -28,11 +28,11 @@ int main()
 	Test<int> a;
 	Test<int> a2;
 
-	std::cout << a.Static_Variable << std::endl;  // o valor da Static_Variable sera 2; pois instanciamos 2 classes do tipo Test<int>
+	std::cout << a.Static_Variable << std::endl;  // the value of Static_Variable here is 2; cause we have 2 classes of type Test<int> instantiated
 
 	Test<float> a3;
 
-	std::cout << a3.Static_Variable << std::endl; // o valor da Static_Variable sera 1; pois instanciamos 1 classe do tipo Test<float>
+	std::cout << a3.Static_Variable << std::endl; // here we have another Static_Variable of value 1; cause we have 1 class of type Test<float> instantiated
 
 
 	
