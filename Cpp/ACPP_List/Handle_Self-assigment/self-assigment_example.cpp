@@ -13,7 +13,7 @@ enum class COLOR : uint8_t
 };
 
 
-std::ostream& operator<<(std::ostream& os, COLOR &color)
+std::ostream& operator<<(std::ostream& os, const COLOR &color)
 {
 	switch(color)
 	{
@@ -39,7 +39,7 @@ class Dog
 {
 	COLOR* color_ptr;
 public:
-	Dog(COLOR dog_color) : color_ptr { new COLOR(dog_color) }
+	Dog(const COLOR dog_color) : color_ptr { new COLOR(dog_color) }
 	{
 	
 		std::cout << *color_ptr << "  dog is born!"  << std::endl;
@@ -53,7 +53,7 @@ public:
 	
 	
 	
-	Dog& operator=(Dog &assigment)
+	Dog& operator=(const Dog &assigment)
 	{
 		// the dog has  a pointer to his color. if we assigment the dog with another dog , we have to delete the pointer,
 		// and then allocate a new color with it.
@@ -72,7 +72,7 @@ public:
 		{
 			aux = new COLOR(*assigment.color_ptr);
 		}
-		catch(int x)
+		catch(const int x)
 		{
 			std::cerr << " error constructing color: " << x << std::endl;
 			delete aux;

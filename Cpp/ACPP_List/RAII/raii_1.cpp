@@ -1,4 +1,6 @@
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include <mutex>
 
 
@@ -15,7 +17,15 @@
 
 
 
+void some_thread_shared_function()
+{
 
+
+
+
+
+
+}
 
 
 
@@ -24,7 +34,7 @@ int main()
 	std::mutex mu;
 	mu.lock();
 
-
+	std::this_thread::sleep_for(std::chrono::seconds(5));
 
 
 }
