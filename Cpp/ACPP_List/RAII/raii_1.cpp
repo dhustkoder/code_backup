@@ -1,6 +1,4 @@
 #include <iostream>
-#include <cstdio>
-#include <chrono>
 #include <thread>
 #include <mutex>
 
@@ -145,8 +143,7 @@ int main()
 	std::thread without_raii(some_thread_shared_function_NO_RAII,2);
 
 	without_raii.join();
-	
-	//	std::this_thread::sleep_for(std::chrono::seconds(5));
+
 
 
 }
