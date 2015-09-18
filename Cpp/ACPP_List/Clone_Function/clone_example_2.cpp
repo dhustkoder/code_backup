@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <algorithm>
 
 class BigBoss
 {
@@ -61,7 +61,9 @@ int main()
 	conversation(bestSoldiers[2]);
 
 
-
+	std::cout << " ---------------------------------------------------------------------- " << std::endl;
+	
+	std::for_each(bestSoldiers, bestSoldiers+3, [](BigBoss *soldier) { delete soldier; } );
 
 
 
