@@ -37,16 +37,35 @@ public:
 };
 
 
+template<class T>
+struct My_unique_ptr
+{
+	T* type_;
+	My_unique_ptr(T* type) : type_ ( type ) {}
+	My_unique_ptr(T type) : type_ ( new T(type) ){}
+	My_unique_ptr(std::initializer_list<T*> list)
+	{
+		type_ = new T[list.size()];
+		for(int i{0}; i < list.size(); ++i)
+			type_[i] = (list.begin() + i);
+	
+	}
+	My_unique_ptr() : type_( new T() ) {}
+	T* operator->() { return type_; }
+	T* operator[](int offset) { return *type_[offset]; }
+	
+	~My_unique_ptr() { delete type_; }
 
+};
 
 
 
 void conversation(BigBoss *snake)
 {
-//	BigBoss *tempCopy = new BigBoss(*snake); // nao funcionara, pois nao criara o objeto certo.
-	BigBoss *tempCopy = snake->clone();
+//	BigBoss *tempCopy = new BigBoss(*snake);  nao funcionara, pois nao criara o objeto certo.
+	My_unique_ptr<BigBoss> tempCopy(snake->clone()); // RAII example...
 	tempCopy->speak();
-	delete tempCopy;
+	// no need to delete tempCopy
 
 }
 
@@ -54,7 +73,7 @@ void conversation(BigBoss *snake)
 
 int main()
 {
-	BigBoss* bestSoldiers[] = { new BigBoss, new SolidSnake, new LiquidSnake };
+	My_unique_ptr<BigBoss*> bestSoldiers = { new BigBoss, new SolidSnake, new LiquidSnake };
 	
 	conversation(bestSoldiers[0]);
 	conversation(bestSoldiers[1]);
@@ -63,7 +82,6 @@ int main()
 
 	std::cout << " ---------------------------------------------------------------------- " << std::endl;
 	
-	std::for_each(bestSoldiers, bestSoldiers+3, [](BigBoss *soldier) { delete soldier; } );
 
 
 
