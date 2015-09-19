@@ -24,6 +24,9 @@ public:
 	// no need for getProfile anymore. this get the data automaticaly
 	// when BigBoss object is used in a context that ask for const char* type.
 	
+	// we can add more implicit conversions for our class for example string
+	
+	operator std::string() { return ((const char*) *this); }	
 	
 	
 	~BigBoss() { std::cout << "This is good... isn't it ?" << std::endl; }
@@ -100,5 +103,23 @@ int main()
 
 	std::cout << boss << std::endl; // less code
 
+
+
+	// PRINCIPLE :
+
+	// make interface easy to use, and hard to use incorrectly
+
+
+	// General Guideline:
+	// 1. Avoid defining seemingly unexpected conversion.
+	// 2. Avoid defining two-way implicit conversion.
+
+	// using type conversion function can lead to errors like
+
+	std::string soldier = boss; 
+
+	// lets say that I confuse BigBoss for std::string, the type conversion function COVERS my bug... so becareful.
+	
+	std::cout << soldier << std::endl;	
 	
 }
