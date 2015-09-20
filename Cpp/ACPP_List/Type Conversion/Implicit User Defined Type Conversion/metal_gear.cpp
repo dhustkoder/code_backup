@@ -81,13 +81,17 @@ int main()
 	rex.fireNuke(); // explosion
 	rex.fireNuke();	// nuclear weapon is empty
 
-	rex = &nuke; // type conversion constructor, destroy reconstruct the same object  with the new constructor parameter
+	rex = &nuke; 	// type conversion constructor, destroy reconstruct the same object  with the new constructor parameter
+			// to transform a NuclearWarhead in a complete MetalGear
+
 	
 	rex.fireNuke(); // the nuke is already destroyed
 
 	
 	// if the explicit keyword is in MetalGear constructor, we cant do
 	// rex = &nuke;
+
+	// If such features are not intended to be used, better use the explicit keyword, to make the code safer
 }
 
 
