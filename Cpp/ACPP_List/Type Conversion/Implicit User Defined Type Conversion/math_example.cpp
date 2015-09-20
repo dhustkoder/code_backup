@@ -12,12 +12,14 @@
 
 class Rational
 {
-friend std::ostream& operator<<(std::ostream &ostream, Rational &rational)
-{
-	ostream << "numerator: " << rational.numerator_ << ", dennominator: " << rational.dennominator_ << std::endl;
-	return ostream;
+	friend std::ostream& operator<<(std::ostream &ostream, Rational &rational)
+	{
+		ostream << "numerator: " << rational.numerator_ << ", dennominator: " << rational.dennominator_ << std::endl;
+		return ostream;
 
-}
+	}
+
+
 public:
 	Rational(int numerator, int dennominator) : 
 		numerator_ ( numerator ), dennominator_ ( dennominator ){}
