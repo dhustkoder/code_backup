@@ -11,27 +11,27 @@ public:
 	NuclearWarhead(float megatons)
 	{
 		megatons_ = megatons;
-		explosion_ = false;
+		exploded_ = false;
 
 	}
 	void explode()
 	{
-		if( explosion_ == false )
+		if( not exploded_ )
 		{
 			// explode ......
-			std::cout << "EXPLOSIOOOOON" << std::endl;
+			std::cout << "!!!!!!!!!!!!!!!!!! " << megatons_ <<  " MEGATONS EXPLOSIOOOOON !!!!!!!!!!!!!!" << std::endl;
 		}
 		else
 			std::cout << "the nuke is already destroyed" << std::endl;
 
 
-		explosion_ = true;
+		exploded_ = true;
 	}
 
 
 private:	
 	float megatons_;
-	bool explosion_;
+	bool exploded_;
 
 
 };
