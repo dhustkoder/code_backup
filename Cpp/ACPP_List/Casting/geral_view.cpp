@@ -59,12 +59,15 @@ int main()
 
 	std::cout << dog1 << std::endl;
 	std::cout << *dog2 << std::endl; // this will enter the same friend function as the dog1, cause is casted to a Dog* pointer...
+	Test *ptr = new Test;
+	Test t = static_cast<Test>(*(ptr)); // cool, the Test is destroyed in end of scope...
+						// but dont be stupid, the Test allocated with new is still there...
 
-	Test t = static_cast<Test>(*(new Test)); // cool, the Test is destroyed in end of scope...
+	
 	
 
 
-
+	delete ptr; // now it really is destroyed
 
 
 
