@@ -24,7 +24,14 @@ public:
 
 };
 
-
+class Test
+{
+public:
+~Test()
+{
+	std::cout << "DESTROYED TEST" << std::endl;
+}
+};
 
 
 
@@ -53,7 +60,7 @@ int main()
 	std::cout << dog1 << std::endl;
 	std::cout << *dog2 << std::endl; // this will enter the same friend function as the dog1, cause is casted to a Dog* pointer...
 
-
+	Test t = static_cast<Test>(*(new Test)); // cool, the Test is destroyed in end of scope...
 	
 
 
