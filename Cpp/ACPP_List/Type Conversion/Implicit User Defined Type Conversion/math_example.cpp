@@ -24,14 +24,16 @@ public:
 	Rational(int numerator = 0, int dennominator = 1) : 
 		numerator_ ( numerator ), dennominator_ ( dennominator ){}
 	
-	const Rational operator*(Rational rhs)
+	const Rational operator*(Rational &rhs)
 	{
 		return Rational( numerator_ * rhs.numerator_ , dennominator_ * rhs.dennominator_ );
 	}
+	
 	const Rational operator*(int multiplier)
 	{
-		return Rational(numerator_ * multiplier, dennominator_ * multiplier);
+		return Rational(numerator_ * multiplier, dennominator_ * 1);
 	}	
+	
 	operator int()
 	{
 		return ( numerator_ / dennominator_ );
@@ -46,12 +48,15 @@ private:
 
 int main()
 {
-	Rational rat  = 20; // 20 is implicit converted into Rational
+	// cause the Rational constructor  allows implicit conversions objects of Rational class can be initialized as follows
+	
+	Rational rat = 20; // 20 is implicit converted into Rational, numerator is 20, and denominator is default 1
 	
 	std::cout << rat; // 20, 1
 
 	
-	Rational rat2 = rat * 2; // operator*(int) is called
+	Rational rat2 = rat * 2; // operator*(int) is called to convert integer into Rational;
+				// or we better do ( rat * Rational(2) )
 	
 	
 	std::cout << rat2; // 40, 2 
@@ -62,7 +67,7 @@ int main()
 	
 	std::cout << rat3; // 800, 2
 
-	Rational rat4 = 2 * rat3; // operator int() is called
+	Rational rat4 = 2 * rat3; // operator int() is called to convert rat3 into integer and do the operation.
 
 	std::cout << rat4; // 800, 1
 
