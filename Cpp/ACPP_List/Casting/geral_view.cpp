@@ -20,7 +20,7 @@ class YellowDog : public Dog
 public:
 	YellowDog(std::string name) :
 		Dog(name) {}
-
+	void imYellow(){ std::cout << "Im Yellow" << std::endl; };
 
 };
 
@@ -55,6 +55,10 @@ int main()
 
 	Dog* dog2 = static_cast<Dog*>(new YellowDog("Patric")); // convert pointer/reference from one type to a related type (up/down casting)
 
+	//dog2->imYellow(); // doesn't work now
+	static_cast<YellowDog*>(dog2)->imYellow(); // now it works...
+	// also works for a type that is not intended to be YellowDog... 
+	static_cast<YellowDog*>( & dog1 )->imYellow(); // so becareful, you might fuck your code up. if starts throwing pointers and casts between related types
 
 
 	std::cout << dog1 << std::endl;
@@ -65,7 +69,7 @@ int main()
 
 	
 	
-
+	
 
 	delete ptr; // now it really is destroyed
 
