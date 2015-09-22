@@ -48,6 +48,9 @@ int main()
 			std::cout << "dynamic_cast failed" << std::endl;
 		else
 			derived2->dummy();
+
+		delete base;
+		delete derived;
 	}
 	catch(std::exception &error)
 	{
@@ -70,16 +73,23 @@ int main()
 	 * Therefore, when their respective type-casts are performed using dynamic_cast, "derived" is pointing to a full object of class Derived, whereas "base" is
 	 * pointing to an object of class Base, which is an incomplete object of class Derived
 	 *
-	 * 
 	 *
+	 * When dynamic_cast cannot cast a pointer because it is not a complete object of the required class -as in the second conversion in the previous example-
+	 * it returns a null pointer to indicate the failure.
+	 *
+	 *
+	 * If dynamic_cast is used to convert to a reference type end the conversion is not possible, an exception of type bad_cast is thrown instead.
+	 *
+	 * dynamic_cast can also perform the other implicit casts allowed on pointers: casting null pointers between pointers type ( even between unrelated classes) 
+	 * and casting any pointer of any type to a void* pointer.
 	 *
 	 */
 
+	 Derived *derived = new Derived;
+	 Derived &reference = dynamic_cast<Derived&>(*(derived));
 
 
-
-
-
+	 delete derived;
 
 }
 
