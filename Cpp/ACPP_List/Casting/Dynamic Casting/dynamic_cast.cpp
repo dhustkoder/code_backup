@@ -16,13 +16,20 @@
 class Base {
 public:
 	virtual void dummy() { std::cout << "Base's dummy" << std::endl; }
+	
+	void onlyInBase() 	{ std::cout << "Only In Base Function called " << std::endl; }
+
 	virtual ~Base() { std::cout << "Base destroyed" << std::endl; }
 };
 
 class Derived : public Base {
 public:
 	virtual void dummy() { std::cout << "Derived's dummy" << std::endl; }
+
+	void onlyInDerived() { std::cout << "Only In Derived Function called" << std::endl; }
+	
 	virtual ~Derived()	{ std::cout << "Derived destroyed" << std::endl; }
+
 };
 
 int main()
@@ -86,7 +93,24 @@ int main()
 	 */
 
 	 Derived *derived = new Derived;
-	 Derived &reference = dynamic_cast<Derived&>(*(derived));
+	 Base &baseReference = dynamic_cast<Base&>(*(derived));
+	 Base *basePointer = dynamic_cast<Base*>(derived);
+
+	 derived->dummy(); // as normaly gives the Derived class version
+
+	 baseReference.dummy(); // even being a Base class reference, the version called is from Derived
+
+	 basePointer->dummy(); // even being a Base class  pointer, the version called is from Derived
+
+	 // All dummy functions give the version of Derived even from a Base pointer or reference
+	 // lets check the unique functions of Derived class, called from a Base class object
+
+	 
+	 baseReference.onlyInDerived();
+	 basePointer->onlyInDerived();
+	 // As expected , this cant be used, when UPCASTED you are limited to the reference/pointer type member functions, although the virtual functions call the 
+	 // object type's version and not the pointer/reference type. good thing.
+
 
 
 	 delete derived;
