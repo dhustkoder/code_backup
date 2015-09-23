@@ -139,7 +139,7 @@ int main()
 	// Only Works right on pointer/reference
 	// Only Works on same type
 	// cast away constness of the object being pointed to.
-
+	// Note though, that removing the constness of a pointed object to actually write to it causes undefined behavior.
 	const int wrong = 10;
 	
 	const_cast<int&>(wrong) = 20;
