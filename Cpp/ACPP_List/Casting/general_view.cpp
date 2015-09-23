@@ -128,6 +128,53 @@ int main()
 	delete baseDog;
 	delete derivedDog;
 
+
+
+
+
+
+
+	// 3. Const Casting
+	
+	// Only Works right on pointer/reference
+	// Only Works on same type
+	// cast away constness of the object being pointed to.
+
+	const int wrong = 10;
+	
+	const_cast<int&>(wrong) = 20;
+
+	std::cout << "wrong is = " << wrong << std::endl; // 10, the const_cast do not work correctly
+	// and if you try
+
+	int *ptr = const_cast<int*>(&wrong); *ptr = 20;
+
+	std::cout << "wrong is = " << wrong << ", ptr is = " << *ptr << std::endl;
+	// somehow wrong is = 10, and *ptr is = 20. 
+	// It is a mess, so only use pointers and references with const_cast, or do not use const_cast at all.
+	
+	
+
+	const int *correct = new int (10);
+
+	const_cast<int&>(*correct) = 20; 
+	
+	// *correct = 30; // compiler error
+
+	
+	std::cout << "correct is  = " << *correct <<  std::endl; // 20
+
+	
+
+
+
+
+
+
+
+
+
+
 	
 	return 0;
 
