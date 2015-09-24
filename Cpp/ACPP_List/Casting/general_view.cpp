@@ -167,13 +167,32 @@ int main()
 	
 
 
+	// 4. Reinterpret Casting
+	// Re-interpret the bits of the object pointed to
+	// can cast one pointer to any other type of pointer.
+
+	unsigned long long number = 0xffff;
+
+	
+	YellowDog *ydog;
+	//ydog = number; // compilation error
+	ydog = reinterpret_cast<YellowDog*>(number);
+	 
+
+	//std::cout << *ydog << std::endl; // seg fault, undefined behavior
+
+	// the operation copy the bits of the "number" to the ydog for a reinterpret and used between unrelated classes and even between related classes
+	// may cause undefined behavior
+
+	
+	YellowDog *aux = new YellowDog("Kurt");
+
+	ydog = reinterpret_cast<YellowDog*>(aux);
 
 
-
-
-
-
-
+	std::cout << *ydog << std::endl;
+	
+	// better info at Reinterpret Casting folder
 
 	
 	return 0;
