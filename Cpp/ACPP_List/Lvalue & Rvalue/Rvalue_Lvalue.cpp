@@ -69,10 +69,11 @@ void Rvalues()
 
 
 
+// Now lets see a little of References, When we talk about references we're defaultly talking about Lvalues references.
+// well, in c++11 there are Rvalue references now, so lets be more explicit
 
 
-
-// Reference ( or Lvalue Reference )
+// References - Lvalue Reference
 
 void reference()
 {
@@ -80,7 +81,8 @@ void reference()
 
 	int &r = i;
 
-	//int &r2 = 5; // error;
+
+	//int &r2 = 5; // error, cannot create a reference from Rvalue;
 
 	// exception : const reference can be initialize with Rvalue
 	const int &r3 = 5; // no error
