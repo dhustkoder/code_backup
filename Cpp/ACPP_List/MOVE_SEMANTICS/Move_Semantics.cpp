@@ -129,16 +129,12 @@ public:
 		{
 			delete[] this->birdsPtr_;
 			this->flockSize_ = 0;
-			
-			if (rhs.flockSize_ == 0)
-				return *this;
-		
 		}
-		
+		if (rhs.flockSize_ == 0)
+			return *this;
 		
 		this->flockSize_ = rhs.flockSize_;
 		this->birdsPtr_ = new Bird[flockSize_];
-
 		std::copy_n(this->birdsPtr_, this->flockSize_, rhs.birdsPtr_);
 
 		return *this;
@@ -153,11 +149,10 @@ public:
 		{
 			delete[] this->birdsPtr_;
 			this->flockSize_ = 0;
-			
-			if (rhs.flockSize_ == 0)
-				return *this;
 		}
-		
+		if (rhs.flockSize_ == 0)
+			return *this;
+			
 		birdsPtr_ = rhsMove.birdsPtr_; // steal the rhsMove's pointer to the birds.
 		rhsMove.birdsPtr_ = nullptr; // set rhsMove's pointer to nullptr cause it will be destroyed and try to delete the pointer
 		rhsMove.flockSize_ = 0; // set rhsMove flockSize_ to 0, just for safety.
