@@ -122,7 +122,7 @@ public:
 
 
 
-	BirdFlock operator=(const BirdFlock& rhs)
+	BirdFlock& operator=(const BirdFlock& rhs)
 	{
 		LOG("USING COPY ASSIGN OPERATOR");
 		if(this->flockSize_ != 0)
@@ -141,7 +141,7 @@ public:
 	}
 
 
-	BirdFlock operator=(BirdFlock&& rhsMove)
+	BirdFlock& operator=(BirdFlock&& rhsMove)
 	{
 		LOG("USING MOVE ASSIGN OPERATOR");
 		
@@ -150,7 +150,7 @@ public:
 			delete[] this->birdsPtr_;
 			this->flockSize_ = 0;
 		}
-		if (rhs.flockSize_ == 0)
+		if (rhsMove.flockSize_ == 0)
 			return *this;
 			
 		birdsPtr_ = rhsMove.birdsPtr_; // steal the rhsMove's pointer to the birds.
@@ -243,7 +243,7 @@ void Bird_Example()
 	// if we are going to swap to use the same DATA, why not just really SWAP and not copy ?
 
 	// Lets use the MOVE 
-
+	std::cout << " _____________________________________________________________ " << std::endl;
 	BirdFlock TEMP = std::move(A); // TEMP steals from A. and leave it empty
 	A = std::move(B); // A steals from B, and leave it empty
 	B = std::move(TEMP); // B steals from TEMP (aka A) and leave it empty.
