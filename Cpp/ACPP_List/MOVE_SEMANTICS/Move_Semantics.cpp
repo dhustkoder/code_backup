@@ -125,9 +125,19 @@ public:
 	BirdFlock operator=(const BirdFlock& rhs)
 	{
 		LOG("USING COPY ASSIGN OPERATOR");
+		if(this->birdsPtr_ != nullptr)
+		{
+			delete[] this->birdsPtr_;
+			this->birdsPtr_ = nullptr;
+			this->flockSize_ = 0;
+			
+		}
+		
 		if (rhs.birdsPtr_ == nullptr)
-			return;
-
+		{
+			return *this;
+		}
+		
 		this->flockSize_ = rhs.flockSize_;
 		this->birdsPtr_ = new Bird[flockSize_];
 
@@ -140,9 +150,20 @@ public:
 	BirdFlock operator=(BirdFlock&& rhsMove)
 	{
 		LOG("USING MOVE ASSIGN OPERATOR");
-		if (rhsMove.birdsPtr_ == nullptr)
-			return;
-
+		
+		if(this->birdsPtr_ != nullptr)
+		{
+			delete[] this->birdsPtr_;
+			this->birdsPtr_ = nullptr;
+			this->flockSize_ = 0;
+			
+		}
+		
+		if (rhs.birdsPtr_ == nullptr)
+		{
+			return *this;
+		}
+		
 		birdsPtr_ = rhsMove.birdsPtr_; // steal the rhsMove's pointer to the birds.
 		rhsMove.birdsPtr_ = nullptr; // set rhsMove's pointer to nullptr cause it will be destroyed and try to delete the pointer
 		rhsMove.flockSize_ = 0; // set rhsMove flockSize_ to 0, just for safety.
