@@ -74,6 +74,12 @@ T&& LogAndProcess(T&& arg)
 }
 
 
+// Perfect Forwarding is just achived when: 
+// 1. T is a template type.
+// 2. Type deduction (reference collapsing happens to T)
+// - T is a function template, not a class template.
+
+
 int main()
 {
 	MyVec temp(1000);
