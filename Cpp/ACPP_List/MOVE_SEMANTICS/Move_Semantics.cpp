@@ -57,7 +57,6 @@ void example_1()
 
 
 
-
 // Lets take a look. here we have a class Bird, 
 // Bird in this example does not have nothing expansive, just a variable of type std::string which store the Birds name.
 class Bird
@@ -161,6 +160,11 @@ public:
 	}
 
 
+	BirdFlock operator+(const BirdFlock& rhs)
+	{
+		LOG("Copy Plus Operator");
+		return *this;
+	}
 
 	~BirdFlock()
 	{
@@ -251,8 +255,9 @@ void Bird_Example()
 	
 	// now we really just swap the the data!
 
+	// another good use of Move assign operator is with other operations
 
-
+	A = (A + B); // the result of ( A + B ) is a Rvalue, so when This Rvalue will be Assigned to A it will call the MOVE ASSIGN OPERATOR
 
 }
 
