@@ -271,7 +271,7 @@ void Bird_Example()
 
 
 
-
+/*
 int main()
 {
 	example_1();
@@ -285,3 +285,4 @@ int main()
 
 	return 0;
 }
+*/
