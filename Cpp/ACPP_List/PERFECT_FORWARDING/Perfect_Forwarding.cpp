@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <string>
 
 #define LOG(x) std::cout << x << std::endl;
@@ -30,7 +31,6 @@ public:
 	~MyVec()
 	{
 		delete[] heapPtr_;
-		heapPtr_ = nullptr;
 	}
 
 
@@ -45,8 +45,8 @@ private:
 
 
 MyVec Process(const MyVec &oldVec) // This copies from &oldVec and return the newVec
-{
-	LOG("Lvalue PROCESS");
+{ 								  // Note that even if we use std::move(oldVec), it will not be moved, cuz it is const object
+	LOG("Lvalue PROCESS"); 
 	MyVec newVec(oldVec);
 	//............ process
 	//return newVec; 
@@ -56,11 +56,12 @@ MyVec Process(const MyVec &oldVec) // This copies from &oldVec and return the ne
 	return std::move(newVec);
 }
 
-MyVec&& Process(MyVec &&oldVec) // This moves oldVec to a newVec and returns the newVec
+MyVec Process(MyVec &&oldVec) // This moves oldVec to a newVec and returns the newVec
 {
 	LOG("Rvalue PROCESS");
 	MyVec newVec(std::move(oldVec));
 	//.............process
+	
 	return std::move(newVec);
 }
 
@@ -75,11 +76,12 @@ MyVec&& Process(MyVec &&oldVec) // This moves oldVec to a newVec and returns the
 
 
 // we can do that like this.
-template<class T>
-T&& LogAndProcess(T&& arg)
+template<class T> 
+void
+LogAndProcess(T&& arg)
 {
 	//......
-	return Process(std::forward<T>(arg));
+	Process(std::forward<T>(arg));
 	// std::forward is a conditional cast, if arg was passed as Rvalue, it will pass a Rvalue to Process, if is  a Lvalue it will pass a Lvalue to Process
 }
 
@@ -90,18 +92,18 @@ T&& LogAndProcess(T&& arg)
 // - T is a function template, not a class template.
 
 
+// NEVER return a Lvalue or Rvalue reference to local variable, object.
 
-void foo(const int &a)
-{
+// We can only return reference in special case if it is from a object's function that returns a reference to member variables;
 
-}
+
+
 int main()
 {
-	MyVec temp(1000);
+//	MyVec temp(1000);
 	MyVec reusable(2000);
-	LogAndProcess(reusable).ImAlive(); // this result in 1 copy operation
-	LogAndProcess(std::move(temp)); // this result in 1 move operation
-	foo(1 + 2);
+	LogAndProcess(reusable); // this result in 1 copy operation
+//	LogAndProcess(std::move(temp)); // this result in 1 move operatio
 	
 
 	// reusable 
