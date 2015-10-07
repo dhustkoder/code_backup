@@ -18,7 +18,7 @@ public:
 		LOG("Called Copy Constructor");
 		std::copy_n(rhs.heapPtr_, rhs.vecSize_, this->heapPtr_);
 	}
-
+	void ImAlive() { std::cout << "yeah" << std::endl; };
 	MyVec(MyVec &&rhs) : // Move Constructor
 		heapPtr_(nullptr), vecSize_(0)
 	{
@@ -30,6 +30,7 @@ public:
 	~MyVec()
 	{
 		delete[] heapPtr_;
+		heapPtr_ = nullptr;
 	}
 
 
@@ -43,12 +44,16 @@ private:
 
 
 
-MyVec& Process(MyVec &oldVec) // This copies from &oldVec and return the newVec
+MyVec Process(const MyVec &oldVec) // This copies from &oldVec and return the newVec
 {
 	LOG("Lvalue PROCESS");
 	MyVec newVec(oldVec);
 	//............ process
-	return newVec;
+	//return newVec; 
+	// compiler can determine newVec as an Rvalue automatic when returning
+	// remeber never return a reference to a locale object
+	// but Ill use  a move here, cuz... I dont know
+	return std::move(newVec);
 }
 
 MyVec&& Process(MyVec &&oldVec) // This moves oldVec to a newVec and returns the newVec
@@ -86,14 +91,17 @@ T&& LogAndProcess(T&& arg)
 
 
 
+void foo(const int &a)
+{
 
+}
 int main()
 {
 	MyVec temp(1000);
 	MyVec reusable(2000);
-	LogAndProcess(reusable); // this result in 1 copy operation
+	LogAndProcess(reusable).ImAlive(); // this result in 1 copy operation
 	LogAndProcess(std::move(temp)); // this result in 1 move operation
-	
+	foo(1 + 2);
 	
 
 	// reusable 
