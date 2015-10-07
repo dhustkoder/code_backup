@@ -27,6 +27,11 @@ public:
 		std::swap(this->vecSize_, rhs.vecSize_);
 	}
 
+	~MyVec()
+	{
+		delete[] heapPtr_;
+	}
+
 
 
 private:
@@ -80,14 +85,42 @@ T&& LogAndProcess(T&& arg)
 // - T is a function template, not a class template.
 
 
+class Test
+{
+	
+	
+public:
+	Test() : Test(this)
+	{
+		A = new MyVec(10);
+		throw std::exception("Testing");
+		B = new MyVec(20);
+	}
+	~Test()
+	{
+		delete B;
+		delete A;
+	}
+
+
+private:
+	Test(Test*) : A(nullptr), B(nullptr) {}
+	MyVec *A, *B;
+};
+
+
+
 int main()
 {
 	MyVec temp(1000);
 	MyVec reusable(2000);
 	LogAndProcess(reusable); // this result in 1 copy operation
 	LogAndProcess(std::move(temp)); // this result in 1 move operation
+	
+	
 
-	// reusable is unchanged
+	// reusable 
+	//is unchanged
 	// temp is empty
 }
 
