@@ -85,29 +85,6 @@ T&& LogAndProcess(T&& arg)
 // - T is a function template, not a class template.
 
 
-class Test
-{
-	
-	
-public:
-	Test() : Test(this)
-	{
-		A = new MyVec(10);
-		throw std::exception("Testing");
-		B = new MyVec(20);
-	}
-	~Test()
-	{
-		delete B;
-		delete A;
-	}
-
-
-private:
-	Test(Test*) : A(nullptr), B(nullptr) {}
-	MyVec *A, *B;
-};
-
 
 
 int main()
