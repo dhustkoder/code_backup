@@ -1,7 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
-
+#include <type_traits>
 #define LOG(x) std::cout << x << std::endl;
 
 class MyVec
@@ -76,12 +76,22 @@ MyVec Process(MyVec &&oldVec) // This moves oldVec to a newVec and returns the n
 
 
 // we can do that like this.
+
+
+
+// These are called Helper types
+template<class _Ty>
+using my_remove_reference = typename std::remove_reference<_Ty>::type;
+
+// now I can use "my_remove_reference" to return the T&& as T, and do a move or copy.
+// we could use remove_reference_t in c++14. but as it is for c++11 lets do our own my_remove_reference.
 template<class T> 
-void
-LogAndProcess(T&& arg)
+my_remove_reference<T> LogAndProcess(T&& arg)
 {
-	//......
-	Process(std::forward<T>(arg));
+	// Do things ......
+
+	// pass to process and return whatever the process returns
+	return Process(std::forward<T>(arg));
 	// std::forward is a conditional cast, if arg was passed as Rvalue, it will pass a Rvalue to Process, if is  a Lvalue it will pass a Lvalue to Process
 }
 
@@ -95,8 +105,6 @@ LogAndProcess(T&& arg)
 // NEVER return a Lvalue or Rvalue reference to local variable, object.
 
 // We can only return reference in special case if it is from a object's function that returns a reference to member variables;
-
-
 
 int main()
 {
