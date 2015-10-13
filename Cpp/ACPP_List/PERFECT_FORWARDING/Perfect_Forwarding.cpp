@@ -84,7 +84,7 @@ template<class _Ty>
 using my_remove_reference = typename std::remove_reference<_Ty>::type;
 
 // now I can use "my_remove_reference" to return the T&& as T, and do a move or copy.
-// we could use remove_reference_t in c++14. but as it is for c++11 lets do our own my_remove_reference.
+// we could use remove_reference_t in c++14. but as it is for c++11 lets do our own my_remove_reference... yeah
 template<class T> 
 my_remove_reference<T> LogAndProcess(T&& arg)
 {
