@@ -6,10 +6,10 @@
 class TEST
 {
 public:
-	TEST(std::string name) 		: name_(name) 							{ std::cout << "DEFAULT CONSTRUCTOR" << std::endl; }
-	TEST(const TEST& rhsCopy) 	: name_ (rhsCopy.name_) 				{ std::cout << "COPY CONSTRUCTOR " << std::endl; }
-	TEST(TEST&& rhsMove) 		: name_ (std::move(rhsMove.name_))		{ std::cout << "MOVE CONSTRUCTOR" << std::endl; }
-	~TEST() 															{ std::cout << "DESTRUCTOR FOR " <<  name_ << std::endl; }
+	TEST(std::string name) 	: name_(name) 						{ std::cout << "DEFAULT CONSTRUCTOR" << std::endl; }
+	TEST(const TEST& rhsCopy) : name_ (rhsCopy.name_) 			{ std::cout << "COPY CONSTRUCTOR " << std::endl; }
+	TEST(TEST&& rhsMove) 	: name_ (std::move(rhsMove.name_))	{ std::cout << "MOVE CONSTRUCTOR" << std::endl; }
+	~TEST() 													{ std::cout << "DESTRUCTOR FOR " <<  name_ << std::endl; }
 	std::string name_;
 };
 
