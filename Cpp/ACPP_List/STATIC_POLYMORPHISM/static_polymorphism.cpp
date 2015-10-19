@@ -64,6 +64,10 @@ int main()
 	// this technique is called Curiusly Recurring Template Pattern ( Static Polymorphism, or Simulated Polymorphism)
 	// We can use the Generic_Parser as it is a true Polymorphic Base Class, except for having to define templates.
 
+	// But Static Polymorphism comes with a price too, our code may use too much templates, it will be Less Flexible
+	// Cuz I cant Derive from MilitaryChart_Parser or EmployeeChart_Parser properly, the code will get confusing.
+	// but for small things, the boost in performance can be worth it.
+
 	Generic_Parser<EmployeeChart_Parser> *employeeParser = new EmployeeChart_Parser;
 	Generic_Parser<MilitaryChart_Parser> *militaryParser = new MilitaryChart_Parser;
 	TreeNode tree;
