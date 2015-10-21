@@ -1,5 +1,4 @@
 #include <iostream>
-#include <typeinfo>
 
 // here we have a simple node struct, with its right, left, and imagine we actualy have some data to work with
 struct TreeNode { TreeNode *left = nullptr, *right = nullptr ; /* data ... */ };
