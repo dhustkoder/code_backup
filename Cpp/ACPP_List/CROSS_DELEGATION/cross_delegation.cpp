@@ -26,7 +26,7 @@ private:
 class Transmitter : public virtual Storable
 {
 public:
-	Transmitter(const char *msg) : Storable(msg) {LOG("Transmitter Constructor Called ..."); }
+	//Transmitter(const char *msg) : Storable(msg) {LOG("Transmitter Constructor Called ..."); }
 	void write()
 	{
 		LOG("Called Transmitter Write ...");
@@ -44,7 +44,7 @@ protected:
 class Receiver : public virtual Storable
 {
 public:
-	Receiver(const char *msg) : Storable(msg) { LOG("Receiver Constructor Called");}
+	//Receiver(const char *msg) : Storable(msg) { LOG("Receiver Constructor Called");}
 	void read()
 	{
 		LOG("Called Receiver Read ...");
@@ -54,7 +54,15 @@ protected:
 	Receiver() { LOG("Receiver Default Constructor Called "); }
 };
 
+/* NOTE:
+	
+		There is no need now, for Transmitter and Receiver have a CONSTRUCTOR which take const char* parameter to pass on Storable,
 
+		Because Transmitter and Receiver are not instantiable classes. both of them have 1 pure virtual method which only gets
+		concrete on Radio Class. 
+
+
+*/
 
 
 
@@ -62,7 +70,7 @@ protected:
 class Radio : public Transmitter, public Receiver
 {
 public:
-	Radio(const char *msg) : Storable(msg), Transmitter(), Receiver() { LOG("Radio Created ...");}
+	Radio(const char *msg) : Storable(msg) { LOG("Radio Created ...");}
 	// ...
 	~Radio() {LOG("Destroying Radio ..."); }
 };
