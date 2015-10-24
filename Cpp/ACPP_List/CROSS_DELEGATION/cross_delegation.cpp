@@ -96,16 +96,27 @@ int main()
 	*/
 
 
+	transmitter->read(); // calls Receiver class Read()
+
+	receiver->write(); // calls Transmitter class Write()
 
 
-	
+
+
+	/*
+
+		Other Considerations when using multiple inheritance in C++
+
+		When you use a class that is based on virtual inheritance like Radio,
+		you should avoid using C style casts and use the C++ specific dynamic_cast instead.
+
+		It will perform a runtime check for validity before casting. so you can be sure that the type of the object
+		you want to cast is related (by inheritance), with the object type you want to cast into.
+		if they are not related, the result will be a NULL pointer or a bad_cast exception in case of references.
 
 
 
-
-	transmitter->read();
-
-	receiver->write();
+	*/
 
 
 
