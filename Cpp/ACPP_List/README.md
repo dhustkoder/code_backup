@@ -3,5 +3,5 @@
 ### https://www.youtube.com/user/BoQianTheProgrammer
 
 
-### C++ The Programming Language && Principles and Pratices Using C++: books from Bjarne Stroustrup
+### C++ The Programming Language && Principles and Practices Using C++: books from Bjarne Stroustrup
 
