@@ -135,7 +135,7 @@ int main()
 
 	// at some point we passed receiver_ptr to a Storable pointer
 
-	Storable *storable_ptr = dynamic_cast<Storable*>(receiver_ptr); // ok as Storable is the base of it all
+	Storable *storable_ptr = static_cast<Storable*>(receiver_ptr); // ok as Storable is the base of it all
 	// this error is not going to happen cuz Storable is the base for all Transmitter, Receiver, Radio.
 	if( storable_ptr == nullptr )
 	{
