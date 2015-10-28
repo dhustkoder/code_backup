@@ -27,8 +27,8 @@ _start:
 
 
 section .data
-	string: db 'Hello Asm', 0Ah
-	length: equ 8
+	string: db "Hello Asm",0Ah
+	length: equ $ - string
 
 	; The data section, is used for declaring initialized data or constants. this data
 	; does not change at runtime. you can declare various constants values, file names,

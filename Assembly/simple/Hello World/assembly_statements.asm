@@ -19,7 +19,7 @@
 
 
 section .bss
-COUNT dw 10
+COUNT: dw
 TOTAL: dw 
 MASK1: dw 
 MARKS: dw 
@@ -28,21 +28,21 @@ section .text
 	global _start
 
 _start:
-	inc [COUNT] ; Increment the memory variable COUNT
+	inc [COUNT],1 	; Increment the memory variable COUNT
 
-	mov TOTAL, 48 ; transfer value 48 to memory variable TOTAL
+	mov TOTAL, 48 	; transfer value 48 to memory variable TOTAL
 	
-	add ah, bh ; add the content of BH register to AH register
+	add ah, bh 	; add the content of BH register to AH register
 
 
-	and MASK1, 128 ; perform AND operation on variable MASK1 and 128
+	and MASK1, 128 	; perform AND operation on variable MASK1 and 128
 
 
-	add MARKS, 10 ; add 10 to the variable MARKS
+	add MARKS, 10 	; add 10 to the variable MARKS
 
 
 
-	mov al, 10 ; transfer value 10 to the al register
+	mov al, 10 	; transfer value 10 to the al register
 
 	mov eax, 1
 	mov ebx, 0
