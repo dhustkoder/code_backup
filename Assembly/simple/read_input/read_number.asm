@@ -1,7 +1,5 @@
 
 
-
-
 section .data ; data segment
 	userMsg: db 'Please enter a number: '
 	userMsgLen: equ $ - userMsg
@@ -10,8 +8,11 @@ section .data ; data segment
 
 
 
-section .bss ; bss secion unitialized data
-	num resb 5
+section .bss              ; bss secion unitialized data
+	num resb 5            ; resb = reserve byte, 5: reserve 5 bytes
+	
+
+
 	; The bss section is used for declaring variables.
 
 
