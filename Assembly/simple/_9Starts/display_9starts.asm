@@ -28,8 +28,9 @@ _start:
 	mov ebx, 1 		; stdout
 	int 0x80
 
-
+	
 	mov eax, 1 		; system call number ( sys_exit )
+	mov ebx, 0 		; exit value. no errors
 	int 0x80 		; call kernel
 
 
