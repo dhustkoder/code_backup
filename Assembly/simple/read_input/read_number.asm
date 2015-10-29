@@ -12,6 +12,7 @@ section .data ; data segment
 
 section .bss ; bss secion unitialized data
 	num resb 5
+	; The bss section is used for declaring variables.
 
 
 section .text
