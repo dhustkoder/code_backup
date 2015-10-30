@@ -40,3 +40,26 @@ public:
 
 //ILLEGAL
 using Derived::foo; // using declaration of  class member out of relative classes scope is also illegal
+
+
+
+
+
+
+
+
+
+// NOTES:
+/*
+	1. using declaration and using directive, when working with namescope, can be used in global or local scope
+
+	2. using declaration can be  used in class scope, when used on class members;
+
+*/
+
+
+
+
+
+
+
