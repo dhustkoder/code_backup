@@ -6,10 +6,10 @@
 class Dog
 {
 public:
-	// ....
+// ....
 	Dog() // default
 	{
-		std::cout << "default Dog constructor [" << this << "]" <<  std::endl;
+		//std::cout << "default Dog constructor [" << this << "]" <<  std::endl;
 	}
 
 	Dog(int x)  // int argument
@@ -28,59 +28,57 @@ public:
 	}
 
 
-		// custom operator new
-		static void *operator new(std::size_t size) noexcept // for default constructor
-		{
-			void *memory = malloc(size); // allocate memory
-			if (memory) // if allocate ok
-			{	
-				return memory; // returns
-			}
-			else
-				return nullptr;
-		
-		}
-
-		static void *operator new[](std::size_t size) noexcept
-		{
-			void *memory = malloc(size); // allocate memory
-			if (memory) // if allocate ok
-			{
-				return memory; // returns
-			}
-			else
-				return nullptr;
-		}
-
-		static void operator delete(void *block) noexcept
-		{
-			free(block);
-		}
-
-		static void operator delete[](void *block) noexcept
-		{
-			free(block);
-		}
-
-		~Dog() { std::cout << "destructor " << std::endl;  }
-	};
-
-
-
-	int main(void)
+	// custom operator new
+	static void *operator new(std::size_t size) noexcept // for default constructor
 	{
+		void *memory = malloc(size); // allocate memory
+		if (memory) // if allocate ok
+			return memory; // returns
+			
+		else
+			return nullptr;
+		
+	}
 
-		Dog *d1 = new Dog[10]; 
-		// Enters the member operator new, then after it returns , construct all 10 objects
+	static void *operator new[](std::size_t size) noexcept
+	{
+		void *memory = malloc(size); // allocate memory
+		if (memory) // if allocate ok
+			return memory; // returns
+			
+		else
+			return nullptr;
+	}
 
-		Dog *d2 = new Dog("const char * argument"); 
-		// enters the member new, then after it returns call constructor std::string&&
+	static void operator delete(void *block) noexcept
+	{
+		free(block);
+	}
 
-		delete[] d1; // call destructor on all objects, then enters the member operator delete[] from Dog
-		delete d2; // call destructor , then enters the member operator delete;
+	static void operator delete[](void *block) noexcept
+	{
+		free(block);
+	}
+
+	~Dog() 
+	{ 
+		//std::cout << "destructor " << std::endl;  
+	}
+};
+
+
+
+int main(void)
+{
+
+	Dog *d1 = new Dog[10]; 
+	// Enters the member operator new, then after it returns , construct all 10 objects
+
+	Dog *d2 = new Dog("const char * argument"); 
+	// enters the member new, then after it returns call constructor std::string&&
+
+	delete[] d1; // call destructor on all objects, then enters the member operator delete[] from Dog
+	delete d2; // call destructor , then enters the member operator delete;
 	
 
-
-
-
-	}
+}
