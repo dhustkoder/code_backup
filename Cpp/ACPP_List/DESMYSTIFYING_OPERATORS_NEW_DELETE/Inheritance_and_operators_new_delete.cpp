@@ -59,7 +59,7 @@ public:
 
 	}
 
-		inline
+	inline
 	static void operator delete(void *block) noexcept
 	{
 		LOG("Freeing YellowDog");
