@@ -26,7 +26,7 @@ int main(void)
 
 
 	LOG(3);
-	//test_ptr3 = (Test*) ::operator new (sizeof(Test));
+	test_ptr3 = (Test*) ::operator new (sizeof(Test));
 	// allocates memory by calling: operator new (sizeof(Test))
 	// but does not call Test's constructor
 
