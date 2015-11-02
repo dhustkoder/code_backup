@@ -53,8 +53,6 @@ constexpr unsigned long long operator"" _mb(unsigned long long x) { return x * 1
 int main()
 {
 
-	
-
 	// user defined literals can make the code easier for a reader
 
 	// C++98
