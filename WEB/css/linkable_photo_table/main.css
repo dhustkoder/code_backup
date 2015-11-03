@@ -1,0 +1,9 @@
+table, img{
+    height: 300px;
+    width: 300px;
+}
+
+
+table {
+    border: 20px lightblue dashed;
+}

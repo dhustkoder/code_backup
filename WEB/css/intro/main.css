@@ -1,0 +1,16 @@
+
+table, img {
+    width:100px;
+    height: 100px;
+}
+
+
+table{
+    background-color: gray;
+}
+
+table, td{
+    border: 1px red dashed;
+
+
+}
