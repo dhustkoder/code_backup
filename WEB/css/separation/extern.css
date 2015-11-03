@@ -1,0 +1,15 @@
+
+h1{
+    font-family: fantasy;
+    color: lightblue;
+    font-size: 30px;
+}
+p{
+    font-family: Arial;
+    font-size: 20px;
+    font-style: oblique;
+
+}
+span{
+    color: blue;
+}
