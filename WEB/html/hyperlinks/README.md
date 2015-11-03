@@ -1,0 +1,1 @@
+What if you wanted to send the user to another part of your website, or another website altogether? You use hyperlinks, or links for short!
