@@ -1,0 +1,11 @@
+
+p:first-child {
+	color: red;
+	font-family: cursive;
+}
+
+
+p:nth-child(4) {
+	color: blue;
+	font-family: verdana;
+}

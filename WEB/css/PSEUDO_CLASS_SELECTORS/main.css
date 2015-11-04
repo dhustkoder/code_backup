@@ -1,0 +1,7 @@
+ul a:hover{
+	font-family: impact;
+	color: red;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 40px;
+}

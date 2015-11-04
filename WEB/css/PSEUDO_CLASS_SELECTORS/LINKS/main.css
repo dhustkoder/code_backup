@@ -1,0 +1,15 @@
+a:link{
+	color: lightblue;
+	font-family: arial, sans-sarif;
+}
+
+a:visited{
+	color: gray;
+	font-size: 10px;
+}
+
+a:hover{
+	font-family: impact;
+	font-weight: bold;
+	font-size: 20px;
+}

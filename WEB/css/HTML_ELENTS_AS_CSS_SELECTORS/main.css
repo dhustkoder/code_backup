@@ -1,0 +1,12 @@
+.red { /* assign values for elements in class red */
+	color: red;
+	border-radius: 2px;
+
+}
+
+
+#rogue {
+	color: #FF00FF;
+	font-weight: bold;
+	font-family: cursive;
+}
