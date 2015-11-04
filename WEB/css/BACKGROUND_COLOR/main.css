@@ -1,0 +1,18 @@
+h1 {
+    height: 200px;
+    width: 800px;
+    color: green;
+    background-color: black;
+}
+
+h2 {
+    height: 200px;
+    width: 800px;
+    background-color: red;
+}
+
+h3 {
+    height: 200px;
+    width: 800px;
+    background-color: blue;
+}

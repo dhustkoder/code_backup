@@ -1,0 +1,13 @@
+p {
+    color: #00E5EE;    
+    
+}
+
+div p{
+    color: #CC0000;    
+    
+}
+
+* {
+    border: #3a5fcd 1px dashed;   
+}

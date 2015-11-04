@@ -1,0 +1,5 @@
+ul {
+	/* this will apply only to ul elements inside the html file */
+	font-family: impact;
+	text-decoration: none;
+}
