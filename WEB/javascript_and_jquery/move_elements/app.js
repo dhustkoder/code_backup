@@ -2,7 +2,11 @@
 
 
 var main = function () {
-    $('.icon-menu').click(alert("idiot"))
+    $(".menu-icon").clicked(function () {
+        $("body").animate({
+            hight: '-21px;'
+            });
+    });
 }
 
 
