@@ -2,7 +2,7 @@
 
 ### guide: BoQianTheProgrammer.
 
-### Books by books from Bjarne Stroustrup: 
+### Books by Bjarne Stroustrup: 
   1. C++ The Programming Language .
   2. Principles and Practices Using C++.
 
