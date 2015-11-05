@@ -1,7 +1,12 @@
-### Great Information about these C++ examples can be found at:
+### Great source that I study these C++ concepts can be found at:
 
-### https://www.youtube.com/user/BoQianTheProgrammer
+### guide: BoQianTheProgrammer.
 
+### Books by books from Bjarne Stroustrup: 
+  1. C++ The Programming Language .
+  2. Principles and Practices Using C++.
 
-### C++ The Programming Language && Principles and Practices Using C++: books from Bjarne Stroustrup
-
+### Books by Scott Meyers:
+  1. Effective C++.
+  2. More Effective C++.
+  3. Effective STL C++.
