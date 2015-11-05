@@ -8,6 +8,8 @@ var quarter = function(number){
 
 if (quarter(3) % 3 != 0 ) {
   console.log("The statement is true");
-} else {
-  console.log("The statement is false");
+} 
+else {
+  
+	console.log("The statement is false");
 }
