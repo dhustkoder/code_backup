@@ -1,6 +1,6 @@
 /* sorry, but I'm off to Dalmasca. */
 
-var text = ["ee wlelwel  Rafael wle lwlewll"];
+var text = "ee wlelwel  Rafael wle lwlewll";
 var myName = "Rafael";
 
 for(var i = 0; i < text.length; ++i)
@@ -12,7 +12,7 @@ for(var i = 0; i < text.length; ++i)
         for(var j = 0; j < i + myName.length; ++j)
         {
            
-            hits.push(text[i][j]);
+            hits.push(text[i]);
         }
         
 
