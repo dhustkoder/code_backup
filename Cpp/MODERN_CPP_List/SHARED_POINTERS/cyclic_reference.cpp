@@ -2,7 +2,8 @@
 #include <string>
 #include <memory>
 
-/* Cyclic Reference :
+/* 
+	Cyclic Reference :
 	
 	There is a bad thing that can happen when using shared pointers whiout care: Cyclic Reference
 
