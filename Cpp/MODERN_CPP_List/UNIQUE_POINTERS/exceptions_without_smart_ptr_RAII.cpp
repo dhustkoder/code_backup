@@ -49,7 +49,7 @@ private:
 
 class DogHouse
 {
-#define messSize 0xFFFF
+#define messSize 0xFFFFFF
 public:
 	DogHouse(std::string ownerName) : dog(new Dog(ownerName)), mess(new long double[messSize]) {
 		LOG("Dog House is Created");
