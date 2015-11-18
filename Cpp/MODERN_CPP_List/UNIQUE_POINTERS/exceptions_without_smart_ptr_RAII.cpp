@@ -61,14 +61,14 @@ public:
 		if (errorCondition)
 		{
 			delete dog; // if exception is thrown, the destructor will not be executed, 
-			delete mess;//then we need to delete the allocated members now
+			delete[] mess;//then we need to delete the allocated members now
 			throw std::bad_alloc();
 		}
 	}
 	~DogHouse(){
 		LOG("Dog House is Destroyed");
 		delete dog;
-		delete mess;
+		delete[] mess;
 	}
 private:
 	Dog *dog;
