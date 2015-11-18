@@ -16,7 +16,7 @@ public:
 		LOG("Dog " << m_name << ", is Destroyed...");
 	}
 
-
+	
 	void bark(){ 
 		LOG("Dog " << m_name << ", is Barking!!");
 	}
@@ -26,7 +26,7 @@ public:
 	}
 
 	void showFriend(){
-		if(m_friend.lock() == nullptr) // test if m_friend is not valid
+		if(m_friend.expired()) // test if m_friend is not valid
 			return;
 
 		LOG("I'm " << m_name << ", and this is my friend: " << m_friend.lock()->m_name << "!");
