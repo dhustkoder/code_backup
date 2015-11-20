@@ -27,6 +27,8 @@ void chrono_ratial()
 	std::ratio<1, 10> r1;
 	LOG(r1.num << " / " << r1.den); // 1 / 10
 
+	std::ratio<2, 10> r2;
+	LOG(r2.num << " / " << r2.den); // 1 / 5
 	// so, lets take a look at the frequency of my system clock:
 
 	LOG(std::chrono::system_clock::period::num << " / " << std::chrono::system_clock::period::den);
@@ -79,5 +81,4 @@ int main()
 {
 	chrono_ratial();
 	chrono_duration();
-
 }
