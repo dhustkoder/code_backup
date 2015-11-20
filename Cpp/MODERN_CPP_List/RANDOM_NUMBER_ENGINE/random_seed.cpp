@@ -27,6 +27,7 @@ void without_seed()
 	std::default_random_engine eng_1;
 	std::default_random_engine eng_2;
 	
+	
 	LOG("printing eng_1...\n");
 	print_values(eng_1);
 
@@ -34,7 +35,8 @@ void without_seed()
 	print_values(eng_2);
 
 	// we got the same values
-
+	if (eng_1 == eng_2)
+		LOG("eng_1 and eng_2 have the same  state");
 }
 
 
@@ -52,6 +54,9 @@ void with_seed()
 	print_values(eng_2);
 
 	// we got different values
+
+	eng_1.seed(); // reset seed to initial state.
+	eng_2.seed(std::chrono::steady_clock::now().time_since_epoch().count()); // set diferent seed
 
 
 }
