@@ -11,7 +11,7 @@
 template<int...> struct seq {};
 
 template<int max, int... s> 
-struct make_seq :make_seq< max - 1, max - 1, s... > {}; // recursive
+struct make_seq : make_seq< max - 1, max - 1, s... > {}; // recursive
 
 
 
@@ -70,6 +70,7 @@ T const& get(tuple_storage<N, T> const& storage) {
 	are gone over to see if any of them can be made to match. With the N fixed, the is only one parent class that
 	is a valid argument, so parent class (and hence T) is deduced automatically
 */
+
 int main() 
 {
 	Tuple<int, std::string, char> t;
@@ -80,4 +81,5 @@ int main()
 	std::cout << get<0>(t) << std::endl
 		<< get<1>(t) << std::endl
 		<< get<2>(t) << std::endl;
+
 }
