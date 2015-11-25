@@ -1,0 +1,16 @@
+# 
+# /etc/fstab: static file system information
+#
+# <file system>	<dir>	<type>	<options>	<dump>	<pass>
+# UUID=7c173534-43da-4123-90d5-05406713b4fc
+/dev/sda4           	/         	ext4      	rw,relatime,data=ordered	0 1
+
+# UUID=b6104207-a205-43e1-8bb7-03adaf5ea267
+/dev/sda6           	none      	swap      	defaults  	0 0
+
+
+
+
+/dev/sda2 /mnt/Windows  ntfs-3g   defaults 0 0
+
+
