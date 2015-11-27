@@ -37,6 +37,11 @@ struct tuple<T, Ts...> : tuple<Ts...>
 
 	}
 
+	tuple<Ts...> getParent() {
+		return *this;
+	}
+
+	
 	T tail;
 };
 
@@ -45,7 +50,7 @@ struct tuple<T, Ts...> : tuple<Ts...>
 // lets take a look to a more concrete code
 
 
-tuple<double, uint64_t, const char*> t1(12.2, 42, "big");
+tuple<double, uint64_t, const char*> mytuple_1(12.2, 42, "big");
 // here is how this tuple would look like if hard coded (ignoring the constructor)
 
 /*
@@ -75,29 +80,20 @@ struct tuple<> {
 // [const char* tail, uint64_t tail, double tail]
 // Note that the empty base consumes no space, due to empty base optimization
 
+// To access the elements in this simple tuple gens a ugly code
+void access_elements_simple_tuple() {
+	LOG(mytuple_1.tail);
+	LOG(mytuple_1.getParent().tail);
+	LOG(mytuple_1.getParent().getParent().tail);
+}
 
 
-
-// So, we can create tuples, but there's not much else we can do with them yet.
-// to access tuple members , we need the get function template.
-
-// FIRST: we'll have to define a helper type that let us access the tupe of the k-th element in a tuple
-
-template<class ...Ts>
-struct elem_type_holder {};
-
-
-// elem_type_holder is yet another variadic class template. It takes a numeber k, and the tuple type
-// we're interested in as template parameters.
-
-//Note that this is a  compile-time template metaprogramming construct. it acts on constants and
-// types, not on runtime objects. for example:
 
 
 
 
 int main() {
 	
-	 
+	access_elements_simple_tuple();
 	
 }
