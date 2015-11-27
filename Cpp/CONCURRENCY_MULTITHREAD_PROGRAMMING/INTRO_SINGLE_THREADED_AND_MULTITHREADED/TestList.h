@@ -5,7 +5,7 @@
 class List
 {
 public:
-	List() : head(nullptr), tail(nullptr) {}
+	List();
 	void pop();
 	bool push(int newNumber);
 	void print();

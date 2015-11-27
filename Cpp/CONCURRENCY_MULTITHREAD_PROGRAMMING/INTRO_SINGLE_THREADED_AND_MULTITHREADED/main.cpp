@@ -54,8 +54,8 @@ void chrono_tests()
 		List *sharedList = new List();
 		List *dummyList1, *dummyList2;
 
-		std::thread t1(pusherWorkerMT, &dummyList1, 1000, 5000), 
-			t2(pusherWorkerMT, &dummyList2, 5000, 10000);
+		std::thread t1(pusherWorkerMT, std::ref(dummyList1), 1000, 5000), 
+			t2(pusherWorkerMT, std::ref(dummyList2), 5000, 10000);
 
 		pusherWorker(sharedList, 0, 1000);
 
@@ -65,6 +65,7 @@ void chrono_tests()
 		sharedList->mergeAndDel(dummyList2);
 
 		sharedList->saveToFile("Shared List");
+
 		delete sharedList;
 
 		auto end = steadyClock.now() - start;
@@ -85,7 +86,7 @@ void chrono_tests()
 
 int main()
 {
-	//chrono_tests();
+	chrono_tests();
 }
 
 

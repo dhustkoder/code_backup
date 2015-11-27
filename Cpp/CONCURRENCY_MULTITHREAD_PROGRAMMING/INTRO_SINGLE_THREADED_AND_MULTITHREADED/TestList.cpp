@@ -13,6 +13,29 @@ struct List::Node
 };
 
 
+
+List::List() 
+	: head(nullptr), tail(nullptr) 
+{
+
+}
+
+
+List::~List()
+{
+	Node *deleterParser = head;
+	while (deleterParser != nullptr)
+	{
+		Node *to_be_deleted = deleterParser;
+		deleterParser = deleterParser->next;
+		delete to_be_deleted;
+	}
+
+}
+
+
+
+
 bool List::push(int newNumber)
 {
 
@@ -103,17 +126,6 @@ bool List::mergeAndDel(List *&rhs)
 
 }
 
-List::~List()
-{
-	Node *deleterParser = head;
-	while (deleterParser != nullptr)
-	{
-		Node *to_be_deleted = deleterParser;
-		deleterParser = deleterParser->next;
-		delete to_be_deleted;
-	}
-
-}
 
 
 
