@@ -37,11 +37,7 @@ struct tuple<T, Ts...> : tuple<Ts...>
 
 	}
 
-	tuple<Ts...> getParent() {
-		return *this;
-	}
-
-	
+	tuple<T, Ts...> &const parent = *this;
 	T tail;
 };
 
@@ -53,6 +49,8 @@ struct tuple<T, Ts...> : tuple<Ts...>
 tuple<double, uint64_t, const char*> mytuple_1(12.2, 42, "big");
 // here is how this tuple would look like if hard coded (ignoring the constructor)
 
+
+// comment this part to compile >
 /*
 struct tuple<double, uint64_t, const char*>
 	: tuple<uint64_t, const char*>
@@ -74,7 +72,7 @@ struct tuple<const char*> : tuple<>
 struct tuple<> {
 
 };
-*/
+*/// <
 
 // the layout of data members in the original 3-element tuple will be
 // [const char* tail, uint64_t tail, double tail]
@@ -83,17 +81,15 @@ struct tuple<> {
 // To access the elements in this simple tuple gens a ugly code
 void access_elements_simple_tuple() {
 	LOG(mytuple_1.tail);
-	LOG(mytuple_1.getParent().tail);
-	LOG(mytuple_1.getParent().getParent().tail);
+	LOG(mytuple_1.parent.tail);
+	LOG(mytuple_1.parent.parent.tail);
 }
-
-
-
-
-
 
 int main() {
 	
 	access_elements_simple_tuple();
+
+
+
 	
 }
