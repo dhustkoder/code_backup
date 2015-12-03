@@ -115,6 +115,32 @@ void aggregation_test()
 	
 }
 
+
+// Composition: The Class is owner of a sub-Object and is responsable for its initialization and destruction
+struct Motor{};
+
+// | Car |<#>---------> |Motor|
+class Car
+{
+public:
+	Car() : m_motor(new Motor()){}
+	~Car() { delete m_motor; }
+private:
+	Motor *m_motor;
+};
+
+// Or
+// |Truck| <#>------> |Motor|
+class Truck
+{
+public:
+	Truck(){}
+	~Truck(){}
+private:
+	Motor m_motor;
+};
+
+
 int main()
 {
 	aggregation_test();
