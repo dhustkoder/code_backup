@@ -79,17 +79,15 @@ struct tuple<> {
 // Note that the empty base consumes no space, due to empty base optimization
 
 // To access the elements in this simple tuple gens a ugly code
-void access_elements_simple_tuple() {
+void access_elements_simple_tuple() 
+{
 	LOG(mytuple_1.tail);
 	LOG(mytuple_1.parent.tail);
 	LOG(mytuple_1.parent.parent.tail);
 }
 
-int main() {
-	
+int main() 
+{
 	access_elements_simple_tuple();
 
-
-
-	
 }
