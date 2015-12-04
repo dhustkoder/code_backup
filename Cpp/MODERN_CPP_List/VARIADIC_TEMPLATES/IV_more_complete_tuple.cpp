@@ -4,10 +4,6 @@
 #define LOG(x) std::cout << x << std::endl
 
 
-
-
-
-
 template<typename ...Ttypes> struct Tuple; // Declaration
 
 template<> class Tuple<> { /* empty */};
@@ -56,8 +52,9 @@ int main()
 {
 	Tuple<int, char, std::string> myTup;
 	get<2>(myTup) = "hello";
-
-	LOG(get<2>(myTup));
+	get<1>(myTup) = 'y';
+	get<0>(myTup) = 200;
+	LOG(get<0>(myTup));
 
 
 
@@ -77,4 +74,6 @@ int main()
 			Tuple<int , char , std::string>
 	
 	*/
+
+	
 }
