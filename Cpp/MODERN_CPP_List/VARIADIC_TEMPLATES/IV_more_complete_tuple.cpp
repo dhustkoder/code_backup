@@ -3,28 +3,20 @@
 #define LOG(x) std::cout << x << std::endl
 
 
+template<typename ...Ttypes> struct Tuple; // Declaration
 
-template<int idx, class ...Ts>
-struct tup_elem {};
+template<> class Tuple<> { /* empty */};
 
 
-template<>
-struct tup_elem<-1>
+template<typename Tvalue, typename ...Trest>
+struct Tuple<Tvalue, Trest...> : Tuple<Trest...>
 {
-
+	Tvalue data;
 };
 
-
-template< int idx, class T, class ...Ts>
-struct tup_elem : tup_elem<idx - 1, Ts...>
-{
-	T data;
-};
 
 int main() 
 {
-
-
-
-
+	
+	
 }
