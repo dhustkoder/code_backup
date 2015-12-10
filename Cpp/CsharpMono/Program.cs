@@ -1,22 +1,43 @@
-﻿using System;
-
+﻿using System.IO;
+using System;
+using System.Diagnostics;
+using System.Reflection;
 namespace MonoTest
 {
+
+	interface IKey {}
+
     class Node
     {
         public int value { get; set; }
-        Node _next = null, _previus = null;
-        public Node next    { get {return _next; } set {_next = value; } }
-        public Node previus { get { return _previus; } set { _previus = value; } }
-        public Node(int x)
-        {
-            value = x;
-        }
+        private Node next = null, previus = null;
+        
 
-        ~Node()
-        {
-            Console.WriteLine("erased node of value " + value);
-        }
+		public void setNext<TKey>(Node newNext) where TKey : List, IKey 
+		{
+			next = newNext;
+		}
+
+		public Node getNext<TKey>() where TKey : List, IKey
+		{
+			return next;
+		}
+
+		public void setPrevius<TKey>(Node newPrev) where TKey : List, IKey 
+		{
+			previus = newPrev;
+		}
+
+		public Node getPrevius<TKey>() where TKey : List, IKey
+		{
+			return previus;
+		}
+			
+
+        public Node(int x)
+		{
+			value = x;
+		}
     }
 
     class List
@@ -31,6 +52,9 @@ namespace MonoTest
 
         }
 
+
+		class ListKey : List, IKey {}
+
         public void push(int x)
         {
             if (head == null)
@@ -41,16 +65,16 @@ namespace MonoTest
 
             var newNode = new Node(x);
 
-            newNode.next = head;
-            head.previus = newNode;
+			newNode.setNext<ListKey>( head );
+			head.setPrevius<ListKey> (newNode);
             head = newNode;
         }
 
 
         public void pop()
         {
-            head = head.next;
-            head.previus = null;
+			head = head.getNext<ListKey>();
+			head.setPrevius<ListKey>(null);
         }
 
         public void listNumbers()
@@ -58,11 +82,9 @@ namespace MonoTest
             for (var itr = head; itr != null;)
             {
                 Console.WriteLine(itr.value);
-                itr = itr.next;
+				itr = itr.getNext<ListKey>();
             }
         }
-
-
 
 
     }
@@ -78,7 +100,9 @@ namespace MonoTest
 
             for (int i = 0; i < 1000000; i++)
             {
-                list.push(i);
+				if (i % 2 == 0) {
+					list.push (i);
+				}
             }
 
             list.listNumbers();
@@ -86,13 +110,12 @@ namespace MonoTest
         }
 
         public static void Main(string[] args)
-        {
-            doWork();
+		{
+			doWork();
+
             Console.Read();
 
             return;
-
-
         }
     }
 
