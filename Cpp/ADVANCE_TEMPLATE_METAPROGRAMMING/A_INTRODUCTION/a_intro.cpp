@@ -48,7 +48,8 @@ void example_1()
 // 2. Improve Run-Time performance. ( by doing operations at compile-time )
 
 
-// This is not free. Compile time can increase... you have to decide what values most to you. but compile-time have done great improvements
+// This is not free. 
+// Compile time can increase... you have to decide what values most to you. but compile-time have done great improvements
 
 
 int main()
