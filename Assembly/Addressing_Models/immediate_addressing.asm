@@ -3,8 +3,8 @@
 
 
 section .data
-	BYTE_VALUE db 150    ; a  byte value is defined
-	WORD_VALUE dw 300    ; a word value is defined
+	BYTE_VALUE DB 150    ; a  byte value is defined
+	WORD_VALUE DW 300    ; a word value is defined
 
 
 section .text
