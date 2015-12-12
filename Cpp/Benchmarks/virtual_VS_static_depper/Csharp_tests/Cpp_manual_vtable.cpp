@@ -1,8 +1,10 @@
 #include <iostream>
 #include <typeinfo>
-#include <boost/container/vector.hpp>
-#include "timer.h"
+#include <vector>
+
 #define LOG(x) std::cout << x << std::endl
+//#define DESTRUCTOR_PRINT
+						
 
 
 struct Item
@@ -25,7 +27,6 @@ struct Item
 	
 	const char* m_name;
 	const ItemType m_type;
-	bool m_destructorCastFree = true;
 	bool m_destructorFree = true;
 
 };
@@ -93,9 +94,11 @@ struct Sword : Weapon
 	
 	~Sword() 
 	{
-		asm volatile("" : : "g"(this) : ); 
+		_asm  mov eax, 0x0;
+#ifdef DESTRUCTOR_PRINT
+		printf("D Sword\n");
+#endif
 		m_destructorFree = false;
-		m_destructorCastFree = false;
 		
 	}
 };
@@ -115,9 +118,12 @@ struct Axe : Weapon
 	
 	~Axe() 
 	{
-		asm volatile("" : : "g"(this) : );
+
+		_asm  mov eax, 0x0;
+#ifdef DESTRUCTOR_PRINT
+		printf("D Axe\n");
+#endif
 		m_destructorFree = false;
-		m_destructorCastFree = false;
 	}
 };
 
@@ -139,9 +145,11 @@ struct HealthPotion : Consumable
 	
 	~HealthPotion()
 	{
-		asm volatile("" : : "g"(this) : );
+		#ifdef DESTRUCTOR_PRINT
+		printf("D HealthPotion\n");
+		#endif
+		_asm  mov eax, 0x0;
 		m_destructorFree = false;
-		m_destructorCastFree = false;
 	}
 
 };
@@ -163,9 +171,11 @@ struct ManaPotion : Consumable
 	
 	~ManaPotion()
 	{
-		asm volatile("" : : "g"(this) : );
+		#ifdef DESTRUCTOR_PRINT
+		printf("D ManaPotion\n");
+		#endif
+		_asm  mov eax, 0x0;
 		m_destructorFree = false;
-		m_destructorCastFree = false;
 	}
 
 };
@@ -191,7 +201,6 @@ int Weapon::attack() noexcept
 	}
 }
 
-
 int Consumable::consume() noexcept
 {
 
@@ -208,16 +217,16 @@ int Consumable::consume() noexcept
 }
 
 
-	
+// Base classes Destructors
 Item::~Item()
 { 
-	if(m_destructorFree)
-		asm volatile("" : : "g"(this) : );
-	
+	if (m_destructorFree)
+	{
+		#ifdef DESTRUCTOR_PRINT
+		printf("D Item\n");
+		#endif
+		_asm  mov eax, 0x0;  // fake destruction operations.
 
-
-	if(m_destructorCastFree)
-	{ 
 		switch(m_type)
 		{
 			case ItemType::Weapon:
@@ -228,7 +237,7 @@ Item::~Item()
 				return;
 			default:
 				// as this is the base of ALL  Items it can save time and jump directly.
-				break;
+				return;
 		}
 		
 		
@@ -236,16 +245,17 @@ Item::~Item()
 
 }
 
+
 Weapon::~Weapon()
 {
 
-	if(m_destructorFree)
-		asm volatile("" : : "g"(this) : );
+	if (m_destructorFree)
+	{
+		#ifdef DESTRUCTOR_PRINT
+		printf("D Weapon\n");
+		#endif
+		_asm  mov eax, 0x0;
 	
-
-		
-	if(m_destructorCastFree)
-	{ 
 		switch(m_weaponType)
 		{
 			case WeaponType::Sword:
@@ -255,9 +265,8 @@ Weapon::~Weapon()
 				static_cast<Axe*>(this)->~Axe();
 				return;
 			default:
-				m_destructorCastFree = false;
 				m_destructorFree = false;
-				break;
+				return;
 		}
 		
 		
@@ -270,13 +279,13 @@ Weapon::~Weapon()
 Consumable::~Consumable()
 {
 	
-	if(m_destructorFree)
-		asm volatile("" : : "g"(this) : );
+	if (m_destructorFree)
+	{
+		#ifdef DESTRUCTOR_PRINT
+		printf("D Consumable\n");
+		#endif
+		_asm  mov eax, 0x0;
 	
-	
-		
-	if(m_destructorCastFree)
-	{ 
 		switch(m_consumableType)
 		{
 			case ConsumableType::HealthPotion:
@@ -286,9 +295,8 @@ Consumable::~Consumable()
 				static_cast<ManaPotion*>(this)->~ManaPotion();
 				return;
 			default:
-				m_destructorCastFree = false;
 				m_destructorFree = false;
-				break;
+				return;
 		}
 		
 		
@@ -299,12 +307,41 @@ Consumable::~Consumable()
 
 
 
-
-
-
-
 // user code
+
+#ifdef DESTRUCTOR_PRINT
+
+// Destructor calls tests
+int main() 
+{
+
+	
+	Item *item = new Sword("Excalibur");
+	Item *item2 = new HealthPotion("elixir");
+
+
+	delete item;
+	
+	delete item2;
+
+	Item *item3 = new Axe("Horned Axe");
+
+
+	Item *item4 = new ManaPotion("Ether");
+
+	delete item3;
+	delete item4;
+
+
+}
+
+
+#else
+
+// Speed Test
+
 constexpr int maxItems = 1000000;
+constexpr int maxLoopTest = 1000;
 template<int x, int n>
 struct static_div
 {
@@ -313,20 +350,20 @@ struct static_div
 
 
 
-void useAllItems(boost::container::vector<Item*> &vec)
+void useAllItems(std::vector<Item*> &vec)
 {
-	
+
 	int swords = 0;
 	int axes = 0;
 	int healthPotions = 0;
-	int manaPotions= 0;
-	
-	for(auto &ptr : vec)
+	int manaPotions = 0;
+
+	for (auto ptr : vec)
 	{
-		switch(ptr->m_type)
+		switch (ptr->m_type)
 		{
 			case Item::ItemType::Weapon:
-				(static_cast<Weapon*>(ptr)->attack() == 1) ? ++swords : ++axes ;
+				(static_cast<Weapon*>(ptr)->attack() == 1) ? ++swords : ++axes;
 				break;
 			case Item::ItemType::Consumable:
 				(static_cast<Consumable*>(ptr)->consume() == 1) ? ++healthPotions : ++manaPotions;
@@ -339,31 +376,42 @@ void useAllItems(boost::container::vector<Item*> &vec)
 	printf("Axes in list: %i\n", axes);
 	printf("HealthPotions in list: %i\n", healthPotions);
 	printf("ManaPotions in list: %i\n", manaPotions);
-	
+
 }
 
 
 
 int main()
 {
-	boost::container::vector<Item*> itemList;
+	std::vector<Item*> itemList;
 	itemList.reserve(maxItems);
-	Timer timer;
-	timer.start();
-	for(int i = 0; i < static_div<maxItems, 2>::value ; ++i)
-		itemList.push_back((i % 2 == 0) ? (Item*)new Sword("Excalibur") : (Axe*) new Axe("Horned Axe"));
-		
-	for(int i = 0; i < static_div<maxItems, 2>::value ; ++i)
-		itemList.push_back((i % 2 == 0) ? (Item*)new HealthPotion("Elixir") : (Axe*) new ManaPotion("Ether"));
-	
-	
-	useAllItems(itemList);
-	
-	
-	for(auto ptr : itemList)
-		delete ptr;
-	
-	printf("Time Elapsed: %f\n", timer.elapsed());
 
+	for(int X = 0; X < maxLoopTest; ++X)
+	{
+
+		for (int i = 0; i < static_div<maxItems, 2>::value; ++i)
+			itemList.push_back((i % 2 == 0) ? (Item*)new Sword("Excalibur") : (Axe*) new Axe("Horned Axe"));
+
+		for (int i = 0; i < static_div<maxItems, 2>::value; ++i)
+			itemList.push_back((i % 2 == 0) ? (Item*)new HealthPotion("Elixir") : (Axe*) new ManaPotion("Ether"));
+
+		useAllItems(itemList);
+
+		for (auto ptr : itemList)
+			delete ptr;
+
+		itemList.clear();
+	}
+
+	
+
+
+	
+
+	//printf("Time Elapsed: %f\n", timer.elapsed());
+	//std::cin.ignore();
 
 }
+
+
+#endif

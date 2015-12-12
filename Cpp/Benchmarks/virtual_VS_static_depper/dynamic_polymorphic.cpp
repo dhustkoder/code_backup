@@ -1,8 +1,7 @@
 #include <iostream>
 #include <typeinfo>
-#include <boost/container/vector.hpp>
+#include <vector>
 #include "timer.h"
-#define LOG(x) std::cout << x << std::endl
 
 
 struct Item
@@ -11,11 +10,10 @@ struct Item
 	{
 	
 	}
-	
 	virtual ~Item()
 	{ 
-		asm volatile("" : : "g"(this) : );
-
+		
+		_asm  mov eax, 0x0; // fake destruction operations
 
 	}
 	
@@ -35,8 +33,7 @@ struct Weapon : Item
 	}
 	virtual ~Weapon()
 	{ 
-		asm volatile("" : : "g"(this) : );
-
+		_asm  mov eax, 0x0;
 
 	}
 	
@@ -52,16 +49,15 @@ struct Consumable : Item
 	{
 		
 	}
-	
+	virtual ~Consumable()
+	{
+		_asm  mov eax, 0x0;
+
+	}
 	
 	virtual int consume() noexcept = 0;
 	
-	virtual ~Consumable()
-	{ 
-		asm volatile("" : : "g"(this) : );
 
-
-	}
 
 };
 
@@ -84,8 +80,7 @@ struct Sword : Weapon
 	
 	~Sword() 
 	{
-		asm volatile("" : : "g"(this) : ); 
-		
+		_asm  mov eax, 0x0;
 	}
 };
 
@@ -96,15 +91,14 @@ struct Axe : Weapon
 	{
 		
 	}
-	
+	~Axe() 
+	{
+		_asm  mov eax, 0x0;
+	}
+
 	int attack() noexcept
 	{
 		return 2;
-	}
-	
-	~Axe() 
-	{
-		asm volatile("" : : "g"(this) : );
 	}
 };
 
@@ -116,6 +110,10 @@ struct HealthPotion : Consumable
 	{
 	
 	}
+	~HealthPotion()
+	{
+		_asm  mov eax, 0x0;
+	}
 	
 	int consume() noexcept
 	{
@@ -124,10 +122,7 @@ struct HealthPotion : Consumable
 	
 	}
 	
-	~HealthPotion()
-	{
-		asm volatile("" : : "g"(this) : );
-	}
+
 
 };
 
@@ -136,6 +131,10 @@ struct ManaPotion : Consumable
 	ManaPotion(const char* name) : Consumable(name)
 	{
 	
+	}
+	~ManaPotion()
+	{
+		_asm  mov eax, 0x0;
 	}
 	
 	int consume() noexcept
@@ -146,10 +145,7 @@ struct ManaPotion : Consumable
 	
 	}
 	
-	~ManaPotion()
-	{
-		asm volatile("" : : "g"(this) : );
-	}
+
 
 };
 
@@ -165,7 +161,7 @@ struct static_div
 
 
 
-void useAllItems(boost::container::vector<Item*> &vec)
+void useAllItems(std::vector<Item*> &vec)
 {
 	int swords = 0;
 	int axes = 0;
@@ -176,7 +172,7 @@ void useAllItems(boost::container::vector<Item*> &vec)
 	Weapon *is_weapon;
 	Consumable *is_consumable;
 	
-	for(auto &ptr : vec)
+	for(auto ptr : vec)
 	{
 		if((is_weapon = dynamic_cast<Weapon*>(ptr)))
 			( is_weapon->attack() == 1 ) ? ++swords : ++axes;
@@ -198,7 +194,7 @@ void useAllItems(boost::container::vector<Item*> &vec)
 
 int main()
 {
-	boost::container::vector<Item*> itemList;
+	std::vector<Item*> itemList;
 	itemList.reserve(maxItems);
 	
 	Timer timer;
@@ -216,7 +212,7 @@ int main()
 		delete ptr;
 
 	printf("Time Elapsed: %f\n", timer.elapsed());
-	
+	std::cin.ignore();
 	
 
 
