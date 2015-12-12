@@ -6,31 +6,30 @@
 //#define DESTRUCTOR_PRINT
 						
 
-
 struct Item
 {
 	enum class ItemType
 	{
 		Weapon,
-		Consumable,
-		Wearable
+		Consumable
 	};
-
-	Item(const char* name, ItemType type) : m_name(name), m_type(type)
-	{
-	
-	}
-	
-	
-	~Item();
-	
-	
-	const char* m_name;
 	const ItemType m_type;
-	bool m_destructorFree = true;
+
+	Item(const char* name, ItemType type)
+		: m_name(name), m_type(type)
+	{
+	}
+
+	~Item();
+	const char* m_name;
+private:
+	// this function casts down in hirarchy until the real type of 'this'
+	void cast_to_concrete_type() noexcept;
+
+protected:
+	bool m_destructorFree = false;
 
 };
-
 
 // interfaces
 struct Weapon : Item
@@ -41,16 +40,19 @@ struct Weapon : Item
 		Axe
 	};
 
-
-	Weapon(const char* name,WeaponType type) : Item(name, Item::ItemType::Weapon), m_weaponType(type)
+	Weapon(const char* name, WeaponType type)
+		: Item(name, Item::ItemType::Weapon), m_weaponType(type)
 	{
-	
 	}
+
 	~Weapon();
-	
 	int attack() noexcept;
+private:
+	friend class Item;
+	void cast_to_concrete_type() noexcept;
 	const WeaponType m_weaponType;
 };
+
 
 
 
@@ -62,16 +64,18 @@ struct Consumable : Item
 		ManaPotion
 	};
 
-	Consumable(const char* name, ConsumableType type) : Item(name, ItemType::Consumable), m_consumableType(type)
+	Consumable(const char* name, ConsumableType type)
+		: Item(name, ItemType::Consumable), m_consumableType(type)
 	{
-		
+
 	}
-	
-	
+
 	int consume() noexcept;
-	
 	~Consumable();
-	
+
+private:
+	friend class Item;
+	void cast_to_concrete_type();
 	const ConsumableType m_consumableType;
 };
 
@@ -82,104 +86,147 @@ struct Consumable : Item
 // concrete
 struct Sword : Weapon
 {
-	Sword(const char *name) : Weapon(name, Weapon::WeaponType::Sword)
+	Sword(const char *name)
+		: Weapon(name, Weapon::WeaponType::Sword)
 	{
-		
 	}
-	
-	int attack() noexcept
+
+	inline int attack() noexcept
 	{
 		return 1;
 	}
-	
-	~Sword() 
+
+
+	~Sword()
 	{
 		_asm  mov eax, 0x0;
 #ifdef DESTRUCTOR_PRINT
 		printf("D Sword\n");
 #endif
-		m_destructorFree = false;
-		
+		m_destructorFree = true;
+	}
+
+private:
+	friend class Weapon;
+
+	inline void cast_to_concrete_type() noexcept
+	{
+		this->~Sword();
 	}
 };
 
 
+
+
+
+
+
+
+
+
+
 struct Axe : Weapon
 {
-	Axe(const char *name) : Weapon(name, Weapon::WeaponType::Axe)
+	Axe(const char *name)
+		: Weapon(name, Weapon::WeaponType::Axe)
 	{
-		
 	}
-	
+
 	int attack() noexcept
 	{
 		return 2;
 	}
-	
-	~Axe() 
+
+	~Axe()
 	{
 
 		_asm  mov eax, 0x0;
 #ifdef DESTRUCTOR_PRINT
 		printf("D Axe\n");
 #endif
-		m_destructorFree = false;
+		m_destructorFree = true;
+	}
+private:
+	friend class Weapon;
+	void cast_to_concrete_type() noexcept
+	{
+		this->~Axe();
 	}
 };
+
+
+
+
+
+
+
+
+
 
 
 
 struct HealthPotion : Consumable
 {
-	HealthPotion(const char* name) : Consumable(name, ConsumableType::HealthPotion)
+	HealthPotion(const char* name)
+		: Consumable(name, ConsumableType::HealthPotion)
 	{
-	
 	}
-	
+
 	int consume() const noexcept
 	{
-	
 		return 1;
-	
 	}
-	
+
+
 	~HealthPotion()
 	{
-		#ifdef DESTRUCTOR_PRINT
+#ifdef DESTRUCTOR_PRINT
 		printf("D HealthPotion\n");
-		#endif
+#endif
 		_asm  mov eax, 0x0;
-		m_destructorFree = false;
+		m_destructorFree = true;
+	}
+private:
+	friend class Consumable;
+	void cast_to_concrete_type() noexcept
+	{
+		this->~HealthPotion();
 	}
 
 };
+
+
+
+
 
 struct ManaPotion : Consumable
 {
-	ManaPotion(const char* name) : Consumable(name, ConsumableType::ManaPotion)
+	ManaPotion(const char* name)
+		: Consumable(name, ConsumableType::ManaPotion)
 	{
-	
 	}
-	
-	int consume() const noexcept
+
+	int ManaPotion::consume() const noexcept
 	{
-	
 		return 2;
-		
-	
 	}
-	
-	~ManaPotion()
+
+	ManaPotion::~ManaPotion()
 	{
-		#ifdef DESTRUCTOR_PRINT
+#ifdef DESTRUCTOR_PRINT
 		printf("D ManaPotion\n");
-		#endif
+#endif
 		_asm  mov eax, 0x0;
-		m_destructorFree = false;
+		m_destructorFree = true;
 	}
 
+private:
+	friend class Consumable;
+	void ManaPotion::cast_to_concrete_type() noexcept
+	{
+		this->~ManaPotion();
+	}
 };
-
 
 
 
@@ -188,123 +235,137 @@ struct ManaPotion : Consumable
 
 
 // interfaces implementation ( manual vTable )
+
+void Item::cast_to_concrete_type() noexcept
+{
+	switch (m_type)
+	{
+	case ItemType::Weapon:
+		static_cast<Weapon*>(this)->cast_to_concrete_type();
+		return;
+	case ItemType::Consumable:
+		static_cast<Consumable*>(this)->cast_to_concrete_type();
+		return;
+	}
+
+}
+
+void Weapon::cast_to_concrete_type() noexcept
+{
+	switch (m_weaponType)
+	{
+	case WeaponType::Sword:
+		static_cast<Sword*>(this)->cast_to_concrete_type();
+		return;
+	case WeaponType::Axe:
+		static_cast<Axe*>(this)->cast_to_concrete_type();
+		return;
+	}
+
+}
+
+
+
+
+
+// interfaces implementation ( manual vTable )
 int Weapon::attack() noexcept
 {
-	switch(m_weaponType)
+	switch (m_weaponType)
 	{
-		case WeaponType::Sword:
-			return static_cast<Sword*>(this)->attack();
-			break;
-		case WeaponType::Axe:
-			return static_cast<Axe*>(this)->attack();
-			break;
+	case WeaponType::Sword:
+		return static_cast<Sword*>(this)->attack();
+		break;
+	case WeaponType::Axe:
+		return static_cast<Axe*>(this)->attack();
+		break;
+	}
+}
+
+
+
+void Consumable::cast_to_concrete_type()
+{
+	switch (m_consumableType)
+	{
+	case ConsumableType::HealthPotion:
+		static_cast<HealthPotion*>(this)->cast_to_concrete_type();
+		return;
+	case ConsumableType::ManaPotion:
+		static_cast<ManaPotion*>(this)->cast_to_concrete_type();
+		return;
+	default:
+		return;
 	}
 }
 
 int Consumable::consume() noexcept
 {
 
-	switch(m_consumableType)
+	switch (m_consumableType)
 	{
-		case ConsumableType::HealthPotion:
-			return static_cast<HealthPotion*>(this)->consume();
-			break;
-		case ConsumableType::ManaPotion:
-			return static_cast<ManaPotion*>(this)->consume();
-			break;
+	case ConsumableType::HealthPotion:
+		return static_cast<HealthPotion*>(this)->consume();
+		break;
+	case ConsumableType::ManaPotion:
+		return static_cast<ManaPotion*>(this)->consume();
+		break;
 	}
 
 }
 
 
+// -----------------------
+
+
+
+
+
 // Base classes Destructors
 Item::~Item()
-{ 
+{
 	if (m_destructorFree)
 	{
-		#ifdef DESTRUCTOR_PRINT
+#ifdef DESTRUCTOR_PRINT
 		printf("D Item\n");
-		#endif
+#endif
 		_asm  mov eax, 0x0;  // fake destruction operations.
-
-		switch(m_type)
-		{
-			case ItemType::Weapon:
-				static_cast<Weapon*>(this)->~Weapon();
-				return;
-			case ItemType::Consumable:
-				static_cast<Consumable*>(this)->~Consumable();
-				return;
-			default:
-				// as this is the base of ALL  Items it can save time and jump directly.
-				return;
-		}
-		
-		
-	} 
+	}
+	else
+		this->cast_to_concrete_type();
 
 }
-
 
 Weapon::~Weapon()
 {
-
 	if (m_destructorFree)
 	{
-		#ifdef DESTRUCTOR_PRINT
+#ifdef DESTRUCTOR_PRINT
 		printf("D Weapon\n");
-		#endif
+#endif
 		_asm  mov eax, 0x0;
-	
-		switch(m_weaponType)
-		{
-			case WeaponType::Sword:
-				static_cast<Sword*>(this)->~Sword();
-				return;
-			case WeaponType::Axe:
-				static_cast<Axe*>(this)->~Axe();
-				return;
-			default:
-				m_destructorFree = false;
-				return;
-		}
-		
-		
-	} 
+
+	}
+	else
+		this->cast_to_concrete_type();
+
 
 }
-
 
 
 Consumable::~Consumable()
 {
-	
+
 	if (m_destructorFree)
 	{
-		#ifdef DESTRUCTOR_PRINT
+#ifdef DESTRUCTOR_PRINT
 		printf("D Consumable\n");
-		#endif
+#endif
 		_asm  mov eax, 0x0;
-	
-		switch(m_consumableType)
-		{
-			case ConsumableType::HealthPotion:
-				static_cast<HealthPotion*>(this)->~HealthPotion();
-				return;
-			case ConsumableType::ManaPotion:
-				static_cast<ManaPotion*>(this)->~ManaPotion();
-				return;
-			default:
-				m_destructorFree = false;
-				return;
-		}
-		
-		
-	} 
+	}
+	else
+		this->cast_to_concrete_type();
 }
-
-
-
 
 
 // user code
@@ -403,10 +464,6 @@ int main()
 		itemList.clear();
 	}
 
-	
-
-
-	
 
 	//printf("Time Elapsed: %f\n", timer.elapsed());
 	//std::cin.ignore();

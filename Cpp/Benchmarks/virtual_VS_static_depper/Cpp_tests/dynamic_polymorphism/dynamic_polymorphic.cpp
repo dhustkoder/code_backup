@@ -1,9 +1,21 @@
 #include <iostream>
 #include <typeinfo>
 #include <vector>
-#include "timer.h"
+#include "../timer.h"
+
+// Interfaces
+struct IWeapon
+{
+	virtual int attack() const noexcept = 0;
+};
+struct IConsumable
+{
+	virtual int consume() noexcept = 0;
+};
 
 
+
+// Classes
 struct Item
 {
 	Item(const char* name) : m_name(name)
@@ -12,9 +24,7 @@ struct Item
 	}
 	virtual ~Item()
 	{ 
-		
 		_asm  mov eax, 0x0; // fake destruction operations
-
 	}
 	
 	
@@ -23,57 +33,20 @@ struct Item
 };
 
 
-// interfaces
-struct Weapon : Item
-{
-
-	Weapon(const char* name) : Item(name)
-	{
-	
-	}
-	virtual ~Weapon()
-	{ 
-		_asm  mov eax, 0x0;
-
-	}
-	
-	virtual int attack() noexcept = 0;
-};
-
-
-
-struct Consumable : Item
-{
-
-	Consumable(const char* name) : Item(name)
-	{
-		
-	}
-	virtual ~Consumable()
-	{
-		_asm  mov eax, 0x0;
-
-	}
-	
-	virtual int consume() noexcept = 0;
-	
-
-
-};
 
 
 
 
 
 // concrete
-struct Sword : Weapon
+struct Sword : Item, IWeapon
 {
-	Sword(const char *name) : Weapon(name)
+	Sword(const char *name) : Item(name)
 	{
 		
 	}
 	
-	int attack() noexcept
+	int attack() const noexcept
 	{
 		return 1;
 	}
@@ -85,28 +58,31 @@ struct Sword : Weapon
 };
 
 
-struct Axe : Weapon
+struct Axe : Item, IWeapon
 {
-	Axe(const char *name) : Weapon(name)
+	Axe(const char *name) : Item(name)
 	{
 		
 	}
+
+	int attack() const noexcept
+	{
+		return 2;
+	}
+
 	~Axe() 
 	{
 		_asm  mov eax, 0x0;
 	}
 
-	int attack() noexcept
-	{
-		return 2;
-	}
+
 };
 
 
 
-struct HealthPotion : Consumable
+struct HealthPotion : Item, IConsumable
 {
-	HealthPotion(const char* name) : Consumable(name)
+	HealthPotion(const char* name) : Item(name)
 	{
 	
 	}
@@ -126,9 +102,9 @@ struct HealthPotion : Consumable
 
 };
 
-struct ManaPotion : Consumable
+struct ManaPotion : Item, IConsumable
 {
-	ManaPotion(const char* name) : Consumable(name)
+	ManaPotion(const char* name) : Item(name)
 	{
 	
 	}
@@ -149,8 +125,6 @@ struct ManaPotion : Consumable
 
 };
 
-	
-
 // user code
 constexpr int maxItems = 1000000;
 template<int x, int n>
@@ -169,14 +143,14 @@ void useAllItems(std::vector<Item*> &vec)
 	int manaPotions= 0;
 
 	
-	Weapon *is_weapon;
-	Consumable *is_consumable;
+	IWeapon *is_weapon;
+	IConsumable *is_consumable;
 	
 	for(auto ptr : vec)
 	{
-		if((is_weapon = dynamic_cast<Weapon*>(ptr)))
+		if((is_weapon = dynamic_cast<IWeapon*>(ptr)))
 			( is_weapon->attack() == 1 ) ? ++swords : ++axes;
-		else if((is_consumable = dynamic_cast<Consumable*>(ptr)))
+		else if((is_consumable = dynamic_cast<IConsumable*>(ptr)))
 			( is_consumable->consume() == 1) ? ++healthPotions : ++manaPotions;
 	}
 
