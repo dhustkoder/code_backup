@@ -14,13 +14,18 @@ struct Item
 		Wearable
 	};
 
-	Item(const char* name, ItemType type) : m_name(name), m_type(type)
+	Item(const char* name, ItemType type) 
+		: m_name(name), m_type(type)
 	{
 	
 	}
 	
 	
-	virtual ~Item();
+	virtual ~Item()
+	{
+		asm volatile("" : : "g"(this) : ); 
+
+	}
 	
 	
 	const char* m_name;
@@ -38,12 +43,15 @@ struct Weapon : Item
 		Axe
 	};
 
-
-	Weapon(const char* name,WeaponType type) : Item(name, Item::ItemType::Weapon), m_weaponType(type)
+	Weapon(const char* name,WeaponType type) 
+		: Item(name, Item::ItemType::Weapon), m_weaponType(type)
 	{
 	
 	}
-	~Weapon();
+	~Weapon()
+	{
+		asm volatile("" : : "g"(this) : ); 
+	}
 	
 	int attack() noexcept;
 	const WeaponType m_weaponType;
@@ -59,7 +67,8 @@ struct Consumable : Item
 		ManaPotion
 	};
 
-	Consumable(const char* name, ConsumableType type) : Item(name, ItemType::Consumable), m_consumableType(type)
+	Consumable(const char* name, ConsumableType type) 
+		: Item(name, ItemType::Consumable), m_consumableType(type)
 	{
 		
 	}
@@ -67,7 +76,10 @@ struct Consumable : Item
 	
 	int consume() noexcept;
 	
-	~Consumable();
+	~Consumable()
+	{
+		asm volatile("" : : "g"(this) : ); 
+	}
 	
 	const ConsumableType m_consumableType;
 };
@@ -84,7 +96,7 @@ struct Sword : Weapon
 		
 	}
 	
-	int attack() noexcept
+	int attack() const noexcept
 	{
 		return 1;
 	}
@@ -104,7 +116,7 @@ struct Axe : Weapon
 		
 	}
 	
-	int attack() noexcept
+	int attack() const noexcept
 	{
 		return 2;
 	}
@@ -165,8 +177,6 @@ struct ManaPotion : Consumable
 
 
 
-
-
 // interfaces implementation ( manual vTable )
 int Weapon::attack() noexcept
 {
@@ -198,35 +208,6 @@ int Consumable::consume() noexcept
 }
 
 
-	
-Item::~Item()
-{ 
-	asm volatile("" : : "g"(this) : );
-	
-
-}
-
-Weapon::~Weapon()
-{
-
-	asm volatile("" : : "g"(this) : );
-
-}
-
-
-
-Consumable::~Consumable()
-{
-	
-	asm volatile("" : : "g"(this) : );
-	
-}
-
-
-
-
-
-
 
 
 
@@ -247,10 +228,8 @@ void useAllItems(boost::container::vector<Item*> &vec)
 	int healthPotions = 0;
 	int manaPotions= 0;
 
-	Timer timer;
-	timer.start();
 
-	for(auto &ptr : vec)
+	for(auto ptr : vec)
 	{
 		switch(ptr->m_type)
 		{
@@ -263,15 +242,14 @@ void useAllItems(boost::container::vector<Item*> &vec)
 				break;
 		}
 	}
-	for(auto ptr : vec)
-		delete ptr;
+	
 		
-	double timeElapsed = timer.elapsed();
+	
 	printf("Swords in list: %i\n", swords);
 	printf("Axes in list: %i\n", axes);
 	printf("HealthPotions in list: %i\n", healthPotions);
 	printf("ManaPotions in list: %i\n", manaPotions);
-	printf("Time Elapsed: %f\n", timeElapsed);
+	
 
 }
 
@@ -279,6 +257,8 @@ void useAllItems(boost::container::vector<Item*> &vec)
 
 int main()
 {
+	Timer timer;
+	timer.start();
 	boost::container::vector<Item*> itemList;
 	itemList.reserve(maxItems);
 	
@@ -290,8 +270,11 @@ int main()
 	
 	
 	useAllItems(itemList);
+	for(auto ptr : itemList)
+		delete ptr;
 	
-	
+	double timeElapsed = timer.elapsed();
+	printf("Time Elapsed: %f\n", timeElapsed);
 	
 	
 

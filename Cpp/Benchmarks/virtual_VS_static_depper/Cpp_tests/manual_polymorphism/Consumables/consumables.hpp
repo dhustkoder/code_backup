@@ -74,7 +74,7 @@ Consumable::~Consumable()
 #ifdef DESTRUCTOR_PRINT
 		printf("D Consumable\n");
 #endif
-		_asm  mov eax, 0x0;
+		asm volatile( "" : : "g"(this) : );
 	}
 	else
 		this->cast_to_concrete_type();

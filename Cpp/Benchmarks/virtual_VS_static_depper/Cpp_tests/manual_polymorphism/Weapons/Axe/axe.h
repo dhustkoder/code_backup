@@ -32,7 +32,7 @@ void Axe::cast_to_concrete_type() noexcept
 Axe::~Axe()
 {
 
-	_asm  mov eax, 0x0;
+	asm volatile( "" : : "g"(this) : );
 #ifdef DESTRUCTOR_PRINT
 	printf("D Axe\n");
 #endif

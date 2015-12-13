@@ -31,7 +31,7 @@ inline void Sword::cast_to_concrete_type() noexcept
 
 Sword::~Sword()
 {
-	_asm  mov eax, 0x0;
+	asm volatile( "" : : "g"(this) : );
 #ifdef DESTRUCTOR_PRINT
 	printf("D Sword\n");
 #endif

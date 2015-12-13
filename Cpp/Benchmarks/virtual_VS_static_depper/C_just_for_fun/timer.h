@@ -3,15 +3,18 @@
 
 typedef struct Timer
 {
-	clock_t from;
+	struct timespec from;
 }Timer;
 
 void TIMER_start(struct Timer *tim)
 { 
-	tim->from = clock(); 
+	clock_gettime(CLOCK_MONOTONIC, &tim->from); 
 }
 
 double TIMER_elapsed(struct Timer *tim)
 {
-	return (clock() - tim->from);
+	struct timespec to;
+	clock_gettime(CLOCK_MONOTONIC, &to);
+	return to.tv_sec - tim->from.tv_sec + 1E-9 * (to.tv_nsec - tim->from.tv_nsec);
 }
+

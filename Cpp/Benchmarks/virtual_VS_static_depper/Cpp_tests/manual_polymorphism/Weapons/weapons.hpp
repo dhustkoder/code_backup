@@ -89,7 +89,7 @@ Weapon::~Weapon()
 #ifdef DESTRUCTOR_PRINT
 		printf("D Weapon\n");
 #endif
-		_asm  mov eax, 0x0;
+		asm volatile( "" : : "g"(this) : );
 
 	}
 	else

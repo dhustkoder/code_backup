@@ -34,7 +34,7 @@ HealthPotion::~HealthPotion()
 #ifdef DESTRUCTOR_PRINT
 	printf("D HealthPotion\n");
 #endif
-	_asm  mov eax, 0x0;
+	asm volatile( "" : : "g"(this) : );
 	m_destructorFree = true;
 }
 

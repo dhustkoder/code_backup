@@ -57,6 +57,7 @@ int health_potion_consume(Item_t *const _this)
 {
 	return 1;
 }
+
 int mana_potion_consume(Item_t *const _this) 
 {
 	return 2;
@@ -64,7 +65,7 @@ int mana_potion_consume(Item_t *const _this)
 // ..
 
 
-struct Weapon_t * CreateWeapon(const char *name, WeaponType type)
+inline struct Weapon_t * CreateWeapon(const char *name, WeaponType type)
 {
 	struct Weapon_t *new_weapon = (struct Weapon_t *) malloc(sizeof(struct Weapon_t));
 	new_weapon->base.m_name = name;
@@ -72,21 +73,21 @@ struct Weapon_t * CreateWeapon(const char *name, WeaponType type)
 
 	switch (type)
 	{
-	case Sword:
-		new_weapon->m_weaponType = Sword;
-		new_weapon->attack = &sword_attack;
-		break;
-	case Axe:
-		new_weapon->m_weaponType = Axe;
-		new_weapon->attack = &axe_attack;
-		break;
+		case Sword:
+			new_weapon->m_weaponType = Sword;
+			new_weapon->attack = &sword_attack;
+			break;
+		case Axe:
+			new_weapon->m_weaponType = Axe;
+			new_weapon->attack = &axe_attack;
+			break;
 	}
 
 	return new_weapon;
 }
 
 
-struct Consumable_t * CreateConsumable(const char *name, ConsumableType type)
+inline struct Consumable_t * CreateConsumable(const char *name, ConsumableType type)
 {
 	struct Consumable_t *new_consumable = (struct Consumable_t*) malloc(sizeof(struct Consumable_t));
 	new_consumable->base.m_name = name;
@@ -110,7 +111,7 @@ struct Consumable_t * CreateConsumable(const char *name, ConsumableType type)
 }
 
 
-void DestroyItemVector(Item_t **_vector, int arraySize)
+inline void DestroyItemVector(Item_t **_vector, int arraySize)
 {
 	int i;
 	for (i = 0; i < arraySize; ++i)
@@ -163,8 +164,7 @@ int main()
 
 	
 	Item_t **item_vector = (Item_t**) malloc(sizeof(Item_t*) * MAX_ITEMS);
-	if (item_vector == NULL)
-		return 1;
+
 
 	Timer timer;
 	TIMER_start(&timer);
@@ -174,16 +174,14 @@ int main()
 	for (i = 0; i < HALF_MAX_ITEMS; ++i)
 	{
 		item_vector[i] = (Item_t*)((i % 2 == 0) ? CreateWeapon("Excalibur", Sword) : CreateWeapon("Horned Axe", Axe));
-		if (item_vector[i] == NULL)
-			return 1;
+
 	}
 
 
 	for ( ; i < MAX_ITEMS; ++i)
 	{
 		item_vector[i] = (Item_t*)((i % 2 == 0) ? CreateConsumable("Elixir", HealthPotion) : CreateConsumable("Ether", ManaPotion));
-		if (item_vector[i] == NULL)
-			return 1;
+
 	}
 
 

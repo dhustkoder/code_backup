@@ -32,7 +32,7 @@ ManaPotion::~ManaPotion()
 #ifdef DESTRUCTOR_PRINT
 	printf("D ManaPotion\n");
 #endif
-	_asm  mov eax, 0x0;
+	asm volatile( "" : : "g"(this) : );
 	m_destructorFree = true;
 }
 

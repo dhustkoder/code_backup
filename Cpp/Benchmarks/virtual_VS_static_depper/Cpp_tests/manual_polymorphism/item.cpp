@@ -25,7 +25,7 @@ Item::~Item()
 #ifdef DESTRUCTOR_PRINT
 		printf("D Item\n");
 #endif
-		_asm  mov eax, 0x0;  // fake destruction operations.
+		asm volatile( "" : : "g"(this) : );  // fake destruction operations.
 	}
 	else
 		this->cast_to_concrete_type();

@@ -99,7 +99,7 @@ struct Sword : Weapon
 
 	~Sword()
 	{
-		_asm  mov eax, 0x0;
+		asm volatile("" : : "g"(this) : );
 #ifdef DESTRUCTOR_PRINT
 		printf("D Sword\n");
 #endif
@@ -140,7 +140,7 @@ struct Axe : Weapon
 	~Axe()
 	{
 
-		_asm  mov eax, 0x0;
+		asm volatile("" : : "g"(this) : );
 #ifdef DESTRUCTOR_PRINT
 		printf("D Axe\n");
 #endif
@@ -183,7 +183,7 @@ struct HealthPotion : Consumable
 #ifdef DESTRUCTOR_PRINT
 		printf("D HealthPotion\n");
 #endif
-		_asm  mov eax, 0x0;
+		asm volatile("" : : "g"(this) : );
 		m_destructorFree = true;
 	}
 private:
@@ -206,23 +206,23 @@ struct ManaPotion : Consumable
 	{
 	}
 
-	int ManaPotion::consume() const noexcept
+	int consume() const noexcept
 	{
 		return 2;
 	}
 
-	ManaPotion::~ManaPotion()
+	~ManaPotion()
 	{
 #ifdef DESTRUCTOR_PRINT
 		printf("D ManaPotion\n");
 #endif
-		_asm  mov eax, 0x0;
+		asm volatile("" : : "g"(this) : );
 		m_destructorFree = true;
 	}
 
 private:
 	friend class Consumable;
-	void ManaPotion::cast_to_concrete_type() noexcept
+	void cast_to_concrete_type() noexcept
 	{
 		this->~ManaPotion();
 	}
@@ -329,7 +329,7 @@ Item::~Item()
 #ifdef DESTRUCTOR_PRINT
 		printf("D Item\n");
 #endif
-		_asm  mov eax, 0x0;  // fake destruction operations.
+		asm volatile("" : : "g"(this) : );  // fake destruction operations.
 	}
 	else
 		this->cast_to_concrete_type();
@@ -343,7 +343,7 @@ Weapon::~Weapon()
 #ifdef DESTRUCTOR_PRINT
 		printf("D Weapon\n");
 #endif
-		_asm  mov eax, 0x0;
+		asm volatile("" : : "g"(this) : );
 
 	}
 	else
@@ -361,7 +361,7 @@ Consumable::~Consumable()
 #ifdef DESTRUCTOR_PRINT
 		printf("D Consumable\n");
 #endif
-		_asm  mov eax, 0x0;
+		asm volatile("" : : "g"(this) : );
 	}
 	else
 		this->cast_to_concrete_type();

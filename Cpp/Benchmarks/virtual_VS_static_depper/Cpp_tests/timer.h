@@ -1,14 +1,14 @@
 #include <time.h>
-#include <stdlib.h>
 
 struct Timer
 {
 	Timer() {  }
-	inline void start() const noexcept { from = clock(); }
-	mutable clock_t from;
-	inline double elapsed() const noexcept
+	void start() { clock_gettime(CLOCK_MONOTONIC, &from); }
+	struct timespec from;
+	double elapsed() const
 	{
-		auto to = clock();
-		return to - from;
+		struct timespec to;
+		clock_gettime(CLOCK_MONOTONIC, &to);
+		return to.tv_sec - from.tv_sec + 1E-9 * (to.tv_nsec - from.tv_nsec);
 	}
 };
