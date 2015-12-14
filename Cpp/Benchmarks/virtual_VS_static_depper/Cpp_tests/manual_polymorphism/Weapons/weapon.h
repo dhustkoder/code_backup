@@ -1,7 +1,7 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-// interfaces
+#include "../item.h"
 struct Weapon : Item
 {
 	enum class WeaponType
@@ -10,7 +10,11 @@ struct Weapon : Item
 		Axe
 	};
 
-	Weapon(const char* name, WeaponType type);
+	Weapon(const char* name, WeaponType type) 
+		: Item(name, ItemType::Weapon), m_weaponType(type)
+	{
+	
+	}
 
 	~Weapon();
 	int attack() noexcept;

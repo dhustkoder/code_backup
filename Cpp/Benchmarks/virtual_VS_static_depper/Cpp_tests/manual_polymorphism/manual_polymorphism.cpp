@@ -3,8 +3,10 @@
 #include "../timer.h"
 #define LOG(x) std::cout << x << std::endl
 
-#include "Weapons/weapons.hpp"
-#include "Consumables/consumables.hpp"
+#include "Weapons/Axe/axe.h"
+#include "Weapons/Sword/sword.h"
+#include "Consumables/HealthPotion/health_potion.h"
+#include "Consumables/ManaPotion/mana_potion.h"
 // user code
 
 #ifdef DESTRUCTOR_PRINT
@@ -14,15 +16,9 @@ int main()
 {
 
 	
-	Item *item = new Sword("Excalibur");
-	//Item *item2 = new HealthPotion("elixir");
-
-	//Weapon *weapon = (Weapon*)item;
-
-	//delete weapon;
+	Item *ptr = new Weapon("Gun", static_cast<Weapon::WeaponType>(-1));
 	
-	delete item;
-
+	delete ptr;
 }
 
 

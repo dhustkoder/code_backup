@@ -1,7 +1,7 @@
 #ifndef SWORD_H
 #define SWORD_H
 
-// concrete
+#include "../weapon.h"
 struct Sword : Weapon
 {
 	Sword(const char *name) 
@@ -29,7 +29,7 @@ inline void Sword::cast_to_concrete_type() noexcept
 }
 
 
-Sword::~Sword()
+inline Sword::~Sword()
 {
 	asm volatile( "" : : "g"(this) : );
 #ifdef DESTRUCTOR_PRINT

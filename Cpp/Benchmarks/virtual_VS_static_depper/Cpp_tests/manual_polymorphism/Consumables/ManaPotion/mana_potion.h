@@ -15,19 +15,19 @@ private:
 	void cast_to_concrete_type() noexcept;
 };
 
-int ManaPotion::consume() const noexcept
+inline int ManaPotion::consume() const noexcept
 {
 	return 2;
 }
 
 
 
-void ManaPotion::cast_to_concrete_type() noexcept
+inline void ManaPotion::cast_to_concrete_type() noexcept
 {
 	this->~ManaPotion();
 }
 
-ManaPotion::~ManaPotion()
+inline ManaPotion::~ManaPotion()
 {
 #ifdef DESTRUCTOR_PRINT
 	printf("D ManaPotion\n");

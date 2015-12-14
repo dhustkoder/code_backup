@@ -1,6 +1,6 @@
 #ifndef AXE_H
 #define AXE_H
-
+#include "../weapon.h"
 struct Axe : Weapon
 {
 	Axe(const char *name) 
@@ -17,19 +17,19 @@ private:
 };
 
 
-int Axe::attack() noexcept
+inline int Axe::attack() noexcept
 {
 	return 2;
 }
 
 
-void Axe::cast_to_concrete_type() noexcept
+inline void Axe::cast_to_concrete_type() noexcept
 {
 	this->~Axe();
 }
 
 
-Axe::~Axe()
+inline Axe::~Axe()
 {
 
 	asm volatile( "" : : "g"(this) : );
