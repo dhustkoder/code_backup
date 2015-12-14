@@ -52,7 +52,18 @@ void example_1()
 // Compile time can increase... you have to decide what values most to you. but compile-time have done great improvements
 
 
+// 2: instead of template functions, we can have template structs
+
+template<int x, int n>
+struct STATIC_DIVISION
+{
+	
+	static const int value = x/n;
+	
+};
 int main()
 {
+	
 	example_1();
+	static_assert(STATIC_DIVISION<10,2>::value == 5, "");
 }
