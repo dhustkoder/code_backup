@@ -10,3 +10,4 @@
   1. Effective C++.
   2. More Effective C++.
   3. Effective STL C++.
+  4. Effective Modern C++.
