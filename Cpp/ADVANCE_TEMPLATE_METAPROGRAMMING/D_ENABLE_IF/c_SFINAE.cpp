@@ -43,7 +43,7 @@ int main(){
 
 
 
-	// SFINAR Happens during template instantiation:
+	// SFINAE Happens during template instantiation:
 
 	// during template instantiation, the compiler will:
 
