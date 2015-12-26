@@ -116,10 +116,10 @@ public:
 //it is called Diamon Shape Hierarchy
 
 /*
-				File
-				/  \
-	          /      \
-	OutputFile       InputFile
+                            File
+                            /  \
+                          /      \
+                 OutputFile     InputFile
 			 \       /
 			   \   /
 			   IOFile
@@ -206,20 +206,11 @@ int main()
 
 		It will perform a runtime check for validity before casting. so you can be sure that the type of the object
 		you want to cast is related (by inheritance), with the object type you want to cast into.
-		if they are not related, the result will be a nullptr pointer or a bad_cast exception in case of references.
+		if they are not related, the result will be a NULL pointer or a bad_cast exception in case of references.
 
 
 
 	*/
-
-
-
-
-
-
-
-
-
 
 	
 	IOFile file("LALA");

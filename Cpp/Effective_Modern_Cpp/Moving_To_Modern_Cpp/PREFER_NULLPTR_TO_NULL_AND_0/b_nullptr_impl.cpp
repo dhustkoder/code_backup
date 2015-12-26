@@ -63,12 +63,16 @@ int main()
 	int *some_pointer = &sometype.x;                  // common pointer
 	void(SomeType::*PtrToMemFunc)() = &SomeType::foo; // pointer to member
 
-	*some_pointer =  300;       // uses common ptr
-	(sometype.*PtrToMemFunc)(); // uses ptr to member func
+	*some_pointer =  300;           // uses common ptr
+	(sometype.*PtrToMemFunc)();     // uses ptr to member func
 	
-	some_pointer = my_nullptr; // assign nullptr; (uses convert to any pointer type)
+	some_pointer = my_nullptr;      // assign nullptr; (uses convert to any pointer type: operator T*)
 		
-	PtrToMemFunc = my_nullptr; // assign nullptr; (uses convert to any pointer to member type)
-	
+	PtrToMemFunc = my_nullptr;      // assign nullptr; (uses convert to any pointer to member type: operator T C::*)
+
+	if(some_pointer == my_nullptr)  // again uses operator T*, and then compare the pointers
+		LOG("ok its null"); 
+	if(PtrToMemFunc == my_nullptr)  // again uses operator T C::*, and then compare the pointers
+		LOG("ok its null too");	
 	
 }
