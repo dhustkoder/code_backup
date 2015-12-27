@@ -6,4 +6,3 @@
 
 ### The Assembly code mostly compiled & linked, NASM, LD.
 
-### Javascript, CSS and HTML  are used/tested with Chrome and Firefox.
