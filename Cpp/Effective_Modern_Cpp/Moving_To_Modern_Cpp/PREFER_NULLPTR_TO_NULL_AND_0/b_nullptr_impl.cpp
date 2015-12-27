@@ -36,12 +36,13 @@ private:
 	my_nullptr_t(const my_nullptr_t&) = delete;
 	my_nullptr_t(my_nullptr_t&&) = delete;
 			
-	void operator +() = delete;
-	void operator -() = delete;
+	void operator +()                    = delete;
+	void operator -()                    = delete;
 	void operator =(const my_nullptr_t&) = delete;
-	void operator *() = delete;
+	void operator *()                    = delete;
 	void operator /(const my_nullptr_t&) = delete;
-	void operator &() = delete;
+	void operator &()                    = delete;
+	void operator ->()                   = delete;
 	void *padding; // ensure the sizeof nullptr is the same as void*
 };
 #define my_nullptr (my_nullptr_t()) 
