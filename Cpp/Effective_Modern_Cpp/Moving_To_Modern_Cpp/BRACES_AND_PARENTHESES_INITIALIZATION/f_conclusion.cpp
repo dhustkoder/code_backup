@@ -9,7 +9,7 @@
 template<class T, class ...Ts>
 void doSomeWork(Ts&& ...args)
 {
-	T localObject(std::forward<Ts>(args)...);  // should we use parentheses ?
+	T localObject(std::forward<Ts>(args)...);    // should we use parentheses ?
 	//T localObject2{std::forward<Ts>(args)...}; // or braced initialization ?
 
 	localObject.use();
