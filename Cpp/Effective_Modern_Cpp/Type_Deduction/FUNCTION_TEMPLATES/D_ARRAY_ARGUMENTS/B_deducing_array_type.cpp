@@ -29,4 +29,5 @@ int main()
 	foo(arrRef);  // T is const char [13], ParamType is const char (&) [13]
 	LOG(arraySize(paladin)); // returns array size
 
+
 }
