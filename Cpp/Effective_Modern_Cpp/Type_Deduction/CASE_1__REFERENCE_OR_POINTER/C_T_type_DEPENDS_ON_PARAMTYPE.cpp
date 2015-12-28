@@ -1,4 +1,5 @@
 #include <iostream>
+#include <boost/type_index.hpp>
 #define LOG(x) std::cout << x << std::endl
 
 
@@ -6,8 +7,8 @@
 //as before
 template<typename T>
 void foo(T& param){ // param is a const reference
-	LOG("is T const? " << std::boolalpha << std::is_const<T>::value);
-	LOG("is ParamType const? " << std::boolalpha << std::is_const<decltype(param)>::value);
+	LOG("T's type: " << boost::typeindex::type_id_with_cvr<T>().pretty_name());
+	LOG("ParamType: " << boost::typeindex::type_id_with_cvr<decltype(param)>().pretty_name());
 }
 
 
@@ -15,8 +16,8 @@ void foo(T& param){ // param is a const reference
 // NOTE that I added const to ParamType
 template<typename T>
 void foo_2(const T& param){ // param is a const reference
-	LOG("is T const? " << std::boolalpha << std::is_const<T>::value);
-	LOG("is ParamType const? " << std::boolalpha << std::is_const<decltype(param)>::value);
+	LOG("T's type: " << boost::typeindex::type_id_with_cvr<T>().pretty_name());
+	LOG("ParamType: " << boost::typeindex::type_id_with_cvr<decltype(param)>().pretty_name());
 }
 
 
@@ -30,7 +31,7 @@ int main(){
 	foo(crx);             // T is const int, ParamType is const int&
 	
 	LOG("/*...*/");
-	
+							// if ParamType is const, T loses its constness cuz its on ParamType
 	foo_2(x);               // T is int, ParamType is CONST int&
 	foo_2(cx);              // T is INT, ParamType is CONST int&
 	foo_2(crx);             // T is INT, ParamType is CONST int&
