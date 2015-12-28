@@ -1,11 +1,13 @@
 #include <iostream>
+#include <boost/type_index.hpp>
 #define LOG(x) std::cout << x << std::endl
 
 //... 
 // if param were a pointer
 template<typename T>
-void foo(T* param){ // param is a reference
-	LOG(std::boolalpha << std::is_const<T>::value);
+void foo(T* param){ // param is a pointer to T, what is T?
+	LOG("T's type: " << boost::typeindex::type_id_with_cvr<T>().pretty_name());
+	LOG("param's type: " << boost::typeindex::type_id_with_cvr<decltype(param)>().pretty_name());
 }
 
 
