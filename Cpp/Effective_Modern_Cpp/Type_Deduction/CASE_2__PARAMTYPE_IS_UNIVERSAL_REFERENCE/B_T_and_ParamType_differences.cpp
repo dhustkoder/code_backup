@@ -5,19 +5,19 @@ template<bool cond>
 using enable_if_t = typename std::enable_if<cond>::type;
 
 template<typename T, typename T2>
-using is_same_t = std::is_same<T,T2>;
+constexpr bool is_same_t = std::is_same<T,T2>::value;
 
 
 // int
 template<typename T>
-enable_if_t<is_same_t<T,int>::value> 
+enable_if_t<is_same_t<T,int>> 
 printType(const char *msg){
 	LOG( msg << " Is int ( int )");
 }
 
 // const int
 template<typename T>
-enable_if_t<is_same_t<T,const int>::value>
+enable_if_t<is_same_t<T,const int>>
 printType(const char *msg){
 	LOG( msg << " Is const int ( const int )");
 }
@@ -26,7 +26,7 @@ printType(const char *msg){
 
 //Lvalue ref
 template<typename T>
-enable_if_t<is_same_t<T,int&>::value>
+enable_if_t<is_same_t<T,int&>>
 printType(const char *msg){
 	LOG( msg << " Is Lvalue reference to an int ( int& )");
 }
@@ -34,7 +34,7 @@ printType(const char *msg){
 
 //Rvalue ref
 template<typename T>
-enable_if_t<is_same_t<T, int&&>::value>
+enable_if_t<is_same_t<T, int&&>>
 printType(const char *msg){
 	LOG( msg << " Is Rvalue reference to an int ( int&& )");
 }
@@ -42,13 +42,13 @@ printType(const char *msg){
 
 // const Lvalue ref
 template<typename T>
-enable_if_t<is_same_t<T,const int&>::value>
+enable_if_t<is_same_t<T,const int&>>
 printType(const char* msg){
 	LOG( msg << " Is const Lvalue reference to an int ( const int& )");
 }
 // const Rvalue ref
 template<typename T>
-enable_if_t<is_same_t<T,const int&&>::value>
+enable_if_t<is_same_t<T,const int&&>>
 printType(const char* msg){
 	LOG(msg << " Is const Rvalue reference to an int ( const int&& )");
 }
