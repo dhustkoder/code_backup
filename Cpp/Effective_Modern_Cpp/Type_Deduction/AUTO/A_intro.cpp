@@ -31,19 +31,19 @@ int main()
 	// initialization expression
 
 	template<typename T>
-	void func_for_x(T param);        // template for x
+	void func_for_x(T param);        // conceptual template for x
 
 	template<typename T>
-	void func_for_cx(const T param); // template for cx
+	void func_for_cx(const T param); // conceptual template for cx
 
 	template<typename T>
-	void func_for_rx(const T& rx);   // template for rx
+	void func_for_rx(const T& rx);   // conceptual template for rx
 
-	func_for_x(27);
+	func_for_x(27); // conceptual call to x template
 
-	func_for_cx(x);
+	func_for_cx(x); // conceptual call to cx template
 
-	func_for_rx(cx);
+	func_for_rx(cx);// conceptual call to rx template
 
 	
 }
