@@ -1,16 +1,15 @@
 #include <iostream>
 #include <boost/type_index.hpp>
 #define LOG(x) std::cout << x << std::endl
-#define FWD(x) std::forward<decltype(x)>(x)
-
+#define DCT(x) decltype(x)
 
 template<typename ...Ts>
-void printTypes(Ts&& ...args)
+void printTypes()
 {
 
 	(void)std::initializer_list<int>
 	{
-		0, ( LOG(boost::typeindex::type_id_with_cvr<decltype(args)>().pretty_name()), 0)...
+		0, ( LOG(boost::typeindex::type_id_with_cvr<Ts>().pretty_name()), 0)...
 	};
 
 }
@@ -44,6 +43,6 @@ int main()
 
 	auto&& uref4 = 27;  // 27 is rvalue so uref4 is, int&&
 
-	printTypes(FWD(uref1), FWD(uref2), FWD(uref3), FWD(uref4));
+	printTypes<DCT(uref1), DCT(uref2), DCT(uref3), DCT(uref4)>();
 
 }
