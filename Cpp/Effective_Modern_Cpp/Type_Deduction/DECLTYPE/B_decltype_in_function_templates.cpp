@@ -72,6 +72,6 @@ int main()
 	vBool[0] = false;
 	LOG(vBool[0]);
 
-	// turns out that in C++14 there is std::_Bit_reference
+	// turns out that in C++11 and C++14 there is std::_Bit_reference
 	// and vector<bool> returns a reference to a bit
 }
