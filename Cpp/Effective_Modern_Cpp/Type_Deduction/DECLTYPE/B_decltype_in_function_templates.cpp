@@ -41,6 +41,14 @@ auto foo_2(Container& c, const Index i) -> decltype(c[i]) // works, the return t
 
 }
 
+// C++14 style with direclty decltype(auto)
+template<typename Container, typename Index>
+decltype(auto) foo_3(Container& c, Index i)  // like the C++11 style with trailing type
+{                                            // this will return exactly what expression c[i] returns ( with references and all )
+	// authenticate_user();
+	return c[i];
+}
+
 int main()
 {
 
@@ -61,6 +69,12 @@ int main()
 	// so foo_2 uses decltype to return exactly what expression v[0] returns
 	foo_2(v,0) = 8;
 	LOG(foo_2(v,0));
+
+
+
+	// also does foo_3 in C++14 style
+	foo_3(v,0) = 13;
+	LOG(foo_3(v,0));
 
 
 	// and as I said std::vector<bool> does not return by reference
