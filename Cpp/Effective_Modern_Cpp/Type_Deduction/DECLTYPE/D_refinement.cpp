@@ -77,4 +77,5 @@ int main()
 	decltype(auto) ret2 = authAndAccess(intVec, 0); // ok intVec is lvalue reference
 
 	LOG(ret2); // prints the value in index 0, well defined behavior
+	std::cin.ignore();
 }
