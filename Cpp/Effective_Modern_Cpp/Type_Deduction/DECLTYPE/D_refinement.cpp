@@ -66,12 +66,10 @@ auto authAndAccess_Cpp11(Container&& c, Index i) -> decltype(std::forward<Contai
 */
 int main()
 {
-
+	decltype(auto) ret1 = authAndAccess(createIntVec(), 0);
+	// the problem here, is that authAndAccess returns a ref to local variable
+	// because createIntVec() is rvalue reference...
 	
-	decltype(auto) ret1 = authAndAccess(createIntVec(), 0); 
-                                      // the problem here, is that authAndAccess returns a ref to local variable
-                                      // because createIntVec() is rvalue reference...
-
 	LOG(ret1); // undefined behavior, since its a reference to a authAndAccess local variable
 
 	auto intVec = createIntVec();
@@ -79,7 +77,4 @@ int main()
 	decltype(auto) ret2 = authAndAccess(intVec, 0); // ok intVec is lvalue reference
 
 	LOG(ret2); // prints the value in index 0, well defined behavior
-
-
-
 }
