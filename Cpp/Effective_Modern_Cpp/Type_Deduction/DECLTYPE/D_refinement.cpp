@@ -46,7 +46,7 @@ decltype(auto) authAndAccess(Container&& c, Index i)
 
 	// authenticate_user();
 	PRINT_TYPE(c);
-	return std::forward<Container>(c);
+	return std::forward<Container>(c)[i];
 }
 
 
@@ -61,7 +61,7 @@ auto authAndAccess_Cpp11(Container&& c, Index i) -> decltype(std::forward<Contai
 	// authenticate_user();
 	PRINT_TYPE(c);
 
-	return std::forward<Container>(c);
+	return std::forward<Container>(c)[i];
 }
 */
 int main()
