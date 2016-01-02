@@ -6,23 +6,27 @@
 template<class ...Ts>
 struct is_one_of;
 
-template<class T, class T2>
-struct is_one_of<T, T2> : std::false_type
+
+template<class T>
+struct is_one_of<T> : std::false_type
 {
 
 };
 
 template<class T, class ...Ts>
-struct is_one_of<T,T, Ts...> : std::true_type
+struct is_one_of<T, T, Ts...> : std::true_type
 {
 
 };
+
 
 template<class T, class T2, class ...Ts>
 struct is_one_of<T, T2, Ts...> : is_one_of<T, Ts...>
 {
 
 };
+
+
 
 template<class T>
 typename std::enable_if<is_one_of<T, float, int>::value, void>::type
@@ -31,9 +35,4 @@ foo();
 
 
 
-
-
-
-
-
-#endif TEST_H
+#endif

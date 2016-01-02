@@ -6,8 +6,7 @@
 
 int main() 
 {
-	LOG( (is_one_of<int,char, void, int, double, void>::value) );
-
+	LOG( (is_one_of<int,char, void, double, void, int>::value) );
 	foo<int>();
 	foo<float>();
 }
