@@ -35,6 +35,8 @@ template<class T>
 typename std::enable_if<is_one_of<T, float, int, int>::value, void>::type
 foo();
 
+// as we do not implement a foo<T> ( foo for any generic type) foo will only compile as
+// foo<int> and foo<float>, that we implemented in the compilation unit
 
 
 
