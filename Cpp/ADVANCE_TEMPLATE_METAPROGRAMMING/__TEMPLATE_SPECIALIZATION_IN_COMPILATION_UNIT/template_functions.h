@@ -28,8 +28,11 @@ struct is_one_of<T, T2, Ts...> : is_one_of<T, Ts...>
 
 
 
+// repeat the last type,
+// for msvc paring do not subline
+// foo<int> as an error
 template<class T>
-typename std::enable_if<is_one_of<T, float, int>::value, void>::type
+typename std::enable_if<is_one_of<T, float, int, int>::value, void>::type
 foo();
 
 
