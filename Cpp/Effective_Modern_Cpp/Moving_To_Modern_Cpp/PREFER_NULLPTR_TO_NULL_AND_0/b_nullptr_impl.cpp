@@ -1,6 +1,8 @@
 #include <iostream>
+#include <memory>
+#include <boost/type_index.hpp>
 #define LOG(x) std::cout << x << std::endl
-	
+#define PRINT_TYPE(x) LOG(boost::typeindex::type_id_with_cvr<x>().pretty_name())
 
 
 
@@ -25,10 +27,12 @@ public:
 	
 	template<typename T>
 	constexpr operator T*() const{        // convert to any pointer type
+		PRINT_TYPE(T);
 		return 0;
 	}
 	template<class C, typename T>
 	constexpr operator T C::* () const{  // convert to any pointer to member type
+		PRINT_TYPE(T);	
 		return 0;
 	}
 
@@ -75,5 +79,6 @@ int main()
 		LOG("ok its null"); 
 	if(PtrToMemFunc == my_nullptr)  // again uses operator T C::*, and then compare the pointers
 		LOG("ok its null too");	
-	
+
+	std::unique_ptr<SomeType> Uptr = my_nullptr; // Error, because std:: smart pointer are prepared for nullptr_t, not my_nullptr	
 }
