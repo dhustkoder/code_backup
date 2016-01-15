@@ -1,3 +1,4 @@
+#include <type_traits>
 // B prefer deleted functions over private ones
 
 // Another trick that deleted functions can perform
