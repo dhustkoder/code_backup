@@ -27,7 +27,7 @@ private:
 	DataType m_internalVec;
 };
 // Notice the differing return types from the data overloads. The lvalue reference
-// overload returns an lvalue reference ... ( i.e, an lvalue), and the rvalue reference
+// overload returns an lvalue reference ... ( i.e., an lvalue), and the rvalue reference
 // overload returns a temporary object (i.e., an rvalue)
 
 
