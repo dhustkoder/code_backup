@@ -1,4 +1,0 @@
-﻿  general_view.cpp
-const_cast.obj : error LNK2005: _main already defined in casting_a_hacktool.obj
-general_view.obj : error LNK2005: _main already defined in casting_a_hacktool.obj
-C:\cygwin64\home\Rafael\Git\github\backup_code\Cpp\vc\project_cpp\Debug\CASTING.exe : fatal error LNK1169: one or more multiply defined symbols found
