@@ -71,7 +71,7 @@ public:
 
 
 
-
+// this is too an axample of how virtual functions returns type can be different if they're compatible
 void soldierBase(BigBoss* soldier)
 {
 	BigBoss *newClone = soldier->clone();
@@ -89,9 +89,15 @@ int main()
 	foo(&redDog); // always a base Dog is created there.
 
 
-	BigBoss *boss = new BigBoss(), *solid = new SolidSnake(), *liquid = new LiquidSnake();
+	BigBoss *soldier[3] =
+	{
+		new BigBoss, new SolidSnake, new LiquidSnake
+	};
 
-	soldierBase(boss); 	 	// now it works good. each class is properly allocated.
-	soldierBase(solid);
-	soldierBase(liquid);
+	soldierBase(soldier[0]); 	 	// now it works good. each class is properly allocated.
+	soldierBase(soldier[1]);
+	soldierBase(soldier[2]);
+
+	for (auto *ptr : soldier)
+		delete ptr;
 }

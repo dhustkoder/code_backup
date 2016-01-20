@@ -19,21 +19,15 @@ public:
 	void foo(std::string &str) // association as a method argument
 	{
 		str.assign("using the resource...");
-
 	}
-
 
 	void foo()
 	{
 		std::string localStr; // association as a local variable
-
 	}
 
 
 };
-
-
-
 
 
 // Aggregation: is a specialised form of | Association |.

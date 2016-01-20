@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\const_cast">
+      <UniqueIdentifier>{24b66570-8e2a-411a-b0b2-022cf6854269}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dynamic_cast">
+      <UniqueIdentifier>{382c7082-4e64-426a-8527-9b4f0ded501f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\reinterpret_cast">
+      <UniqueIdentifier>{3fa9a685-8c92-42f3-a32c-c292ecf7219f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\static_cast">
+      <UniqueIdentifier>{2e7d6e76-80d0-4054-8a19-66f255229c54}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\ACPP_List\Casting\C++ Style Casting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ACPP_List\Casting\casting_a_hacktool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ACPP_List\Casting\general_view.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ACPP_List\Casting\Const Casting\const_cast.cpp">
+      <Filter>Source Files\const_cast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ACPP_List\Casting\Dynamic Casting\dynamic_cast.cpp">
+      <Filter>Source Files\dynamic_cast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ACPP_List\Casting\Dynamic Casting\example2.cpp">
+      <Filter>Source Files\dynamic_cast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ACPP_List\Casting\Reinterpret Casting\reinterpret_cast.cpp">
+      <Filter>Source Files\reinterpret_cast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\ACPP_List\Casting\Static Casting\static_cast.cpp">
+      <Filter>Source Files\static_cast</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

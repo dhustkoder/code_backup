@@ -8,7 +8,7 @@
  *  								Generate_Code         Generate_Data                   Risky                        Data_Type
  *  Object Casting:
  *    
- *      static_cast                     yes                   yes                           2                             any types
+ *      static_cast                     yes                   yes                           2                            any types
  * 																														(as long as type conversion is defined implicit 
  *																																or explicit)
  *
