@@ -4,3 +4,9 @@ C:\cygwin64\home\Rafael\Git\github\backup_code\C#\STUDY\CovarianciaContravarianc
 C:\cygwin64\home\Rafael\Git\github\backup_code\C#\STUDY\CovarianciaContravariancia_Pratica\obj\Debug\CovarianciaContravariancia_Pratica.csprojResolveAssemblyReference.cache
 C:\cygwin64\home\Rafael\Git\github\backup_code\C#\STUDY\CovarianciaContravariancia_Pratica\obj\Debug\CovarianciaContravariancia_Pratica.exe
 C:\cygwin64\home\Rafael\Git\github\backup_code\C#\STUDY\CovarianciaContravariancia_Pratica\obj\Debug\CovarianciaContravariancia_Pratica.pdb
+C:\cygwin64\home\Rafael\Git\github\backup_code\C#\CovarianciaContravariancia_Pratica\bin\Debug\CovarianciaContravariancia_Pratica.exe.config
+C:\cygwin64\home\Rafael\Git\github\backup_code\C#\CovarianciaContravariancia_Pratica\bin\Debug\CovarianciaContravariancia_Pratica.exe
+C:\cygwin64\home\Rafael\Git\github\backup_code\C#\CovarianciaContravariancia_Pratica\bin\Debug\CovarianciaContravariancia_Pratica.pdb
+C:\cygwin64\home\Rafael\Git\github\backup_code\C#\CovarianciaContravariancia_Pratica\obj\Debug\CovarianciaContravariancia_Pratica.csprojResolveAssemblyReference.cache
+C:\cygwin64\home\Rafael\Git\github\backup_code\C#\CovarianciaContravariancia_Pratica\obj\Debug\CovarianciaContravariancia_Pratica.exe
+C:\cygwin64\home\Rafael\Git\github\backup_code\C#\CovarianciaContravariancia_Pratica\obj\Debug\CovarianciaContravariancia_Pratica.pdb

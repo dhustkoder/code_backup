@@ -4,3 +4,6 @@ C:\cygwin64\home\Rafael\Git\github\backup_code\C#\STUDY\bin\Debug\STUDY.pdb
 C:\cygwin64\home\Rafael\Git\github\backup_code\C#\STUDY\obj\Debug\STUDY.csprojResolveAssemblyReference.cache
 C:\cygwin64\home\Rafael\Git\github\backup_code\C#\STUDY\obj\Debug\STUDY.exe
 C:\cygwin64\home\Rafael\Git\github\backup_code\C#\STUDY\obj\Debug\STUDY.pdb
+C:\cygwin64\home\Rafael\Git\github\backup_code\C#\bin\Debug\STUDY.exe.config
+C:\cygwin64\home\Rafael\Git\github\backup_code\C#\obj\Debug\STUDY.exe
+C:\cygwin64\home\Rafael\Git\github\backup_code\C#\obj\Debug\STUDY.pdb
