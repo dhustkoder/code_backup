@@ -99,8 +99,6 @@ namespace D_MORE_ON_REFERENCE_VS_VALUE_TYPES
 
             p1.x = 200;
             Console.WriteLine(p2.x);
-
-
         }
     }
 }
