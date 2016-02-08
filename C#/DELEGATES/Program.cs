@@ -4,6 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+namespace outro
+{
+    internal class X
+    {
+
+    }
+}
+
+
 namespace DELEGATES
 {
     // delegates are special classes
@@ -23,6 +33,7 @@ namespace DELEGATES
     {
         public void Execute()
         {
+            outro.X x = new outro.X();
             var sum = new CalcDelegate(Sum);
             var sub = new CalcDelegate(Sub);
             var mul = new CalcDelegate(Mul);

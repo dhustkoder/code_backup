@@ -46,8 +46,7 @@ namespace STUDY
     {
         static void Main(string[] args)
         {
-
-
+            
             var c = new Cov<Circle>();
             covariance<object> x = c;
             contravariance<Circle2> x2 = c;
