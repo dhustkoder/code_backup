@@ -1,14 +1,48 @@
 #include <iostream>
 #include <vector>
 #include <string>
-//-------------------------------------
-//-------------------------------------
-// Delegate simple implementation.
 
 
 template<class T, class ReturnType, class ...Args>
 using MethodPtr = ReturnType (T::*)(Args...);
 
+
+
+
+//-------------------------------------
+//-------------------------------------
+// SimpleDelegate implementation ( one method only )
+
+template<class T, class ReturnType, class ...Ts>
+class SimpleDelegate
+{
+	using TMethod = MethodPtr<T, ReturnType, Ts...>;
+public:
+	SimpleDelegate(T& ref) :
+		m_ref(ref)
+	{
+
+	}
+
+	void operator=(TMethod method) {
+		m_method = method;
+	}
+	ReturnType operator()(Ts&& ...args) {
+		return ((m_ref).*(m_method))(std::forward<Ts>(args)...);
+	} 
+
+protected:
+	T& m_ref;
+	TMethod m_method;
+};
+
+
+
+
+
+//-------------------------------------
+//-------------------------------------
+// Vector Delegate implementation ( can hold multiple methods and call all them )
 
 template<class T, class ReturnType, class ...Ts>
 class DelegateBase
@@ -129,7 +163,7 @@ private:
 	}
 
 
-	Delegate<MonsterA, void, const std::string&> m_shootDmgDel{*this};
+	SimpleDelegate<MonsterA, void, const std::string&> m_shootDmgDel{*this};
 };
 
 
@@ -145,5 +179,7 @@ int main()
 
 	use_gun(monster1);
 	use_gun(monster2);
+
+	Delegate<MonsterA, void> x (monster1);
 
 }
