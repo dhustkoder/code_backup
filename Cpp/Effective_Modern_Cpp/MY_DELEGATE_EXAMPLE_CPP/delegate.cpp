@@ -8,10 +8,7 @@ using MethodPtr = ReturnType (T::*)(Args...);
 template<class T, class ReturnType, class ...Ts>
 class DelegateBase
 {
-protected:
-	T& m_ref;
 	using TMethod = MethodPtr<T, ReturnType, Ts...>;
-	std::vector<TMethod> m_methods;
 public:
 	DelegateBase(T& ref) :
 		m_ref(ref)
@@ -29,6 +26,10 @@ public:
 		m_methods.clear();
 		m_methods.push_back(method);
 	}
+
+protected:
+	T& m_ref;
+	std::vector<TMethod> m_methods;
 };
 
 
