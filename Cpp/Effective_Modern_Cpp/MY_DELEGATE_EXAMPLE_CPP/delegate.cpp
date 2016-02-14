@@ -1,5 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <string>
+//-------------------------------------
+//-------------------------------------
+// Delegate simple implementation.
+
 
 template<class T, class ReturnType, class ...Args>
 using MethodPtr = ReturnType (T::*)(Args...);
@@ -76,72 +81,69 @@ public:
 
 };
 
-
-
-
 // -----------------------------------------------------------
-// Example:
-class OtherClass
+// -----------------------------------------------------------
+// -----------------------------------------------------------
+// -----------------------------------------------------------
+std::string operator"" _s(const char* x, unsigned long) { return std::string(x); }
+
+
+
+// Use Example:
+
+
+class MonsterA
 {
 public:
-	template<class T, class ...Ts>
-	auto DoSomething(T x, Ts&& ...args)
+	enum class Level { Easy, Hard };
+
+
+	MonsterA(Level x) 
 	{
-		return x(std::forward<Ts>(args)...);
+		switch(x)
+		{
+			case Level::Easy: m_shootDmgDel = &MonsterA::TakeShootOnEasy; break;
+			case Level::Hard: m_shootDmgDel = &MonsterA::TakeShootOnHard; break;
+		}
 	}
+
+	void TakeShootDamage(const std::string& msg) 
+	{
+		m_shootDmgDel(msg);
+	}
+	
+	static const char* GetName() 
+	{
+		return "Monster A";
+	}
+
+private:
+	void TakeShootOnEasy(const std::string &msg) {
+		std::cout << msg << std::endl 
+			<< "The Monster Dies..." << std::endl;
+	}
+
+	void TakeShootOnHard(const std::string &msg) {
+		std::cout << msg << std::endl
+			<< "The Monster Lives and Counter-Attack..." << std::endl;
+	}
+
+
+	Delegate<MonsterA, void, const std::string&> m_shootDmgDel{*this};
 };
 
 
-class Test
+void use_gun(MonsterA &monster)
 {
-	int x = 10;
-
-	int Sum(int a, int b)
-	{
-		return x += (a + b);
-	}
-
-	int Sub(int a, int b)
-	{
-		return x += (a - b);
-	}
-
-	int Mul(int a, int b)
-	{
-		return x += (a * b);
-	}
-
-	void InternalMethod()
-	{
-		std::cout << "Hi, I'm Test's private method" << std::endl;
-	}
-
-public:
-	auto callDelegate()
-	{
-		OtherClass otherObject;
-		auto *del = new Delegate<Test,int, int, int>(*this);
-		*del = &Test::Sum;
-		*del += &Test::Sub;
-		*del += &Test::Mul;
-		
-		// other object calls Test's private method through Delegate
-		std::cout << otherObject.DoSomething(*del, 10,10) << std::endl;
-
-
-		// void return type method...
-		auto *del2 = new Delegate<Test, void>(*this);
-		*del2 = &Test::InternalMethod;
-		
-		otherObject.DoSomething(*del2);
-	}
-
-};
-
-
-
+	monster.TakeShootDamage("Player Shoots the "_s + monster.GetName());
+}
 
 int main()
 {
-	Test().callDelegate();
+	MonsterA monster1(MonsterA::Level::Easy);
+	MonsterA monster2(MonsterA::Level::Hard);
+
+	use_gun(monster1);
+	use_gun(monster2);
+
 }
