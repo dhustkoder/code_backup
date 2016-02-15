@@ -2,7 +2,11 @@
 #include <vector>
 #include <string>
 
+// just a literal helper for strings
+std::string operator"" _s(const char* x, unsigned long) { return std::string(x); }
 
+
+// template for any Method pointer
 template<class T, class ReturnType, class ...Args>
 using MethodPtr = ReturnType (T::*)(Args...);
 
@@ -18,16 +22,17 @@ class SimpleDelegate
 {
 	using TMethod = MethodPtr<T, ReturnType, Ts...>;
 public:
-	SimpleDelegate(T& ref) :
+	inline SimpleDelegate(T& ref) :
 		m_ref(ref)
 	{
 
 	}
 
-	void operator=(TMethod method) {
+	inline void operator=(TMethod method) {
 		m_method = method;
 	}
-	ReturnType operator()(Ts&& ...args) {
+
+	inline ReturnType operator()(Ts&& ...args) {
 		return ((m_ref).*(m_method))(std::forward<Ts>(args)...);
 	} 
 
@@ -115,24 +120,30 @@ public:
 
 };
 
-// -----------------------------------------------------------
-// -----------------------------------------------------------
-// -----------------------------------------------------------
-// -----------------------------------------------------------
-std::string operator"" _s(const char* x, unsigned long) { return std::string(x); }
 
 
 
+
+
+// -----------------------------------------------------------
+// -----------------------------------------------------------
+// -----------------------------------------------------------
+// -----------------------------------------------------------
 // Use Example:
 
 
 class MonsterA
 {
-public:
+
+
+public: // public statics api
 	enum class Level { Easy, Hard };
+	static std::string GetName() { return "MonsterA"; }
+	
 
 
-	MonsterA(Level x) 
+public: // public api
+	MonsterA(Level x)
 	{
 		switch(x)
 		{
@@ -141,17 +152,10 @@ public:
 		}
 	}
 
-	void TakeShootDamage(const std::string& msg) 
-	{
+	void TakeShootDamage(const std::string& msg) {
 		m_shootDmgDel(msg);
-	}
-	
-	static const char* GetName() 
-	{
-		return "Monster A";
-	}
-
-private:
+	}	
+private: // private methods
 	void TakeShootOnEasy(const std::string &msg) {
 		std::cout << msg << std::endl 
 			<< "The Monster Dies..." << std::endl;
@@ -162,10 +166,10 @@ private:
 			<< "The Monster Lives and Counter-Attack..." << std::endl;
 	}
 
+private: // private members
 
 	SimpleDelegate<MonsterA, void, const std::string&> m_shootDmgDel{*this};
 };
-
 
 void use_gun(MonsterA &monster)
 {
@@ -174,12 +178,9 @@ void use_gun(MonsterA &monster)
 
 int main()
 {
-	MonsterA monster1(MonsterA::Level::Easy);
-	MonsterA monster2(MonsterA::Level::Hard);
+	MonsterA monster1(MonsterA::Level::Easy); // piece of cake monster
+	MonsterA monster2(MonsterA::Level::Hard); // die hard monster
 
 	use_gun(monster1);
 	use_gun(monster2);
-
-	Delegate<MonsterA, void> x (monster1);
-
 }
