@@ -10,6 +10,7 @@
 ; Text section is used for keeping te actual code. this section must begin with the declaration
 ; global _start, which tells the kernel where the program execution begins
 
+global _start;
 section .text
 
 global _start
