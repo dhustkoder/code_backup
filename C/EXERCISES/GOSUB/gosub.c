@@ -1,4 +1,4 @@
-/* original idea by Bisqwit: youtube/bisqwit */
+/* original idea by Bisqwit: youtube.com/user/Bisqwit */
 #include <stdio.h>
 
 void* gosub_stack_ptr[10];
