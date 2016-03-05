@@ -1,5 +1,5 @@
 
-/* original idea by Bisqwit:  youtube/bisqwit */
+/* original idea by Bisqwit:  youtube.com/user/Bisqwit */
 
 #include <cstdio>
 #include <stack>
