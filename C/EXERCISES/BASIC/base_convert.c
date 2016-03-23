@@ -2,31 +2,28 @@
 #include <string.h>
 #include <stdlib.h>
 
-void print_bin(int number)
+const char* get_bin_str(int number)
 {
+	static char binary_str_zero[2] = {'0', '\0'};
+	static char binary_str[32];
+	if(number == 0) return binary_str_zero;
 	
-	if(number != 0)
+	static int i, j;
+	unsigned char zero_on = 0;
+	for( i = j = 0; i < 32; ++i)
 	{
-		int i = 0;
-		unsigned char zero_on = 0;
-		for(; i < 32; ++i)
-		{
-			if(number & 0x80000000) 
-			{ 
-				printf("1");
-				zero_on = 1;
-			}
-			else if(zero_on) printf("0");
-			number <<= 1;
+		if(number & 0x80000000) 
+		{ 
+			binary_str[j++] = '1';
+			zero_on = 1;
 		}
+		else if(zero_on) binary_str[j++] = '0';
+		
+		number <<= 1;
 	}
-
-	else
-		printf("0");
-
-
-	printf(" bin\n");
-	return;
+	
+	binary_str[j] = '\0';
+	return binary_str;
 }
 
 
@@ -41,15 +38,25 @@ int main()
 	for( ; inputSize; --inputSize)
 	{
 		fgets(inputLine, sizeof(inputLine), stdin);
-		sscanf(inputLine, "%i", &input);
-		printf("case %d:\n", ++i);
-
+		printf("Case %d:\n", ++i);
 		switch(inputLine[strlen(inputLine) - 2])
 		{
-			case 'c': printf("%x hex\n", input); print_bin(input); break;
-			case 'x': printf("%d dec\n", input); print_bin(input); break;
-			case 'n': printf("%d dec\n%x hex\n", input); break;
+			case 'c': 
+				sscanf(inputLine, "%d", &input); 
+				printf("%x hex\n%s bin\n", input, get_bin_str(input));  
+				break;
+
+			case 'x': 
+				input = strtol(inputLine, NULL, 16);
+				printf("%d dec\n%s bin\n", input, get_bin_str(input));
+				break;
+			
+			case 'n': 
+				input = strtol(inputLine, NULL, 2);
+				printf("%d dec\n%x hex\n", input, input); 
+				break;
 		}
+		printf("\n");
 	}
 
 
