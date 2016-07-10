@@ -1,17 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
+// C++11 CODE
 
-// C99 CODE
 
 typedef unsigned int Uint;
 
 inline Uint mystrlen(const char*);
 inline void cpyback(void*, const void*, Uint);
 
+template<class F>
+struct ScopeExit {
+	ScopeExit(ScopeExit&&) = default;
+	ScopeExit(F&& f) : m_f(static_cast<F&&>(f)) { }
+	~ScopeExit() { m_f(); }
+	F m_f;
+};
+
+template<class F>
+inline ScopeExit<F> MakeScopeExit(F&& f) {
+	return ScopeExit<F>(static_cast<F&&>(f));
+}
+
+
 int main(int argc, char** argv)
 {
-	const Uint PRINT_TIMES = 10;
-	int exit_code = 0;
+	constexpr const Uint PRINT_TIMES = 10;
 	
 	if( argc < 2 ) {
 		fprintf(stderr, "usage: %s <word>\n", argv[0]);
@@ -19,36 +32,35 @@ int main(int argc, char** argv)
 	}
 
 	const Uint word_len = mystrlen(argv[1]);
-
-	char* const buffer = malloc(sizeof(char) * (word_len + 1));
+	char* const buffer = static_cast<char*>( malloc(sizeof(char) * ( word_len + 1 )) );
 
 	if(buffer == NULL) {
 		perror("Failed to allocate memory: ");
 		return -1;
 	}
 
+	const auto buffer_cleanup = MakeScopeExit([=] {
+		puts("WRITING BUFFER TO STDOUT");
+		fwrite(buffer, sizeof(char), word_len, stdout);
+		putchar('\n');
+		free(buffer); 
+	});
+
+
 	cpyback(buffer, argv[1], word_len);
 	buffer[word_len] = '\0';
 
 	for(Uint i = 0; i < PRINT_TIMES; ++i) 
 	{
-		if(puts(buffer) == EOF)
+		if( puts(buffer) == EOF ) 
 		{
-			perror("puts failed");
-			exit_code = -1;
-			goto buffer_cleanup;
+			perror("puts failed: ");
+			return -1;
 		}
 	}
 
 
-buffer_cleanup:
-	puts("WRITING BUFFER TO STDOUT");
-	fwrite(buffer, sizeof(char), word_len, stdout);
-	putchar('\n');
-	free(buffer);
-
-
-	return exit_code;
+	return 0;
 }
 
 
@@ -68,8 +80,8 @@ inline Uint mystrlen(const char* str) {
 
 
 inline void cpyback(void* dest, const void* src, Uint size) {
-	char* _dest = (char*) dest;
-	const char* _src = (const char*) src;
+	char* _dest = static_cast<char*>(dest);
+	const char* _src = static_cast<const char*>(src);
 	_src += size-1;
 
 	for( Uint i = 0 ; i < size ; ++i ) {

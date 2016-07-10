@@ -1,0 +1,13 @@
+-fno-exceptions           = disable exceptions
+-fno-rtti                 = disable run time type information
+-s                        = remove all symbol table and relocation information from the executable 
+-Wl,--gc-sections         = enable garbage collection of unused input sections
+-ffunction-sections       = eliminate the unused code and data from the final executable
+-fdata-sections           = eliminate the unused code and data from the final executable
+-fno-stack-protector      = elimate stack protection code ( usualy off by default )
+-fomit-frame-pointer      = elimate frame pointer (usualy off by default )
+-fno-unwind-tables        = similar to -fexceptions ( usualy off by default )
+-fno-asynchronous-unwind-tables = don't generate unwind table in dwarf2 format, if supported. ( usualy off by default )
+
+-nodefaultlibs            = don't link default libraries
+-lc = link libc

@@ -1,1 +1,1 @@
-g++ cpp98.cpp -o cpp98.exe -std=c++98 -pedantic-errors -Wall -Wextra
+g++ cpp98.cpp -o cpp98.exe -Os -std=c++98 -pedantic-errors -Wall -Wextra

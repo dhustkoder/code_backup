@@ -13,17 +13,25 @@ int main(int argc, char** argv)
 	using std::cout;
 	using std::cerr;
 
-	const Uint print_times = 10;
-	
-	if( argc < 2 ) {
-		cerr << "usage: " << argv[0] <<  " <word>\n";
-		return -1;
+	try {
+
+		const Uint print_times = 10;
+		
+		if( argc < 2 ) {
+			cerr << "usage: " << argv[0] <<  " <word>\n";
+			return -1;
+		}
+
+		const std::vector<char> buffer = CreateReverseVector(argv[1]);
+
+		for(Uint i = 0; i < print_times; ++i) {
+			cout << buffer.data() << '\n';
+		}
+
 	}
-
-	const std::vector<char> buffer = CreateReverseVector(argv[1]);
-
-	for(Uint i = 0; i < print_times; ++i) {
-		cout << buffer.data() << '\n';
+	catch(std::exception& e) {
+		cerr << "fatal error: " << e.what() << '\n';
+		return -1;
 	}
 
 	return 0;

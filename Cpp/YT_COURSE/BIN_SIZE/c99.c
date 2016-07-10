@@ -1,42 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// C++98 CODE
-
+// C99 CODE
 
 typedef unsigned int Uint;
 
-Uint mystrlen(const char*);
-void cpyback(void*, const void*, Uint);
-
-
-struct Buffer 
-{
-	Buffer() 
-		: data(NULL) 
-	{
- 
-	}
-	
-	Buffer(Uint size) 
-	{ 
-		data = static_cast<char*>(malloc( sizeof(char) * size) );
-	}
-	
-	~Buffer() { free(data); }
-	operator char*() { return data; }
-	bool operator==(void* p) const { return data == p; }
-
-	char* data;
-};
-
-
-
-
+inline Uint mystrlen(const char*);
+inline void cpyback(void*, const void*, Uint);
 
 int main(int argc, char** argv)
 {
-	const Uint print_times = 10;
+	const Uint PRINT_TIMES = 10;
+	int exit_code = 0;
 	
 	if( argc < 2 ) {
 		fprintf(stderr, "usage: %s <word>\n", argv[0]);
@@ -44,7 +19,8 @@ int main(int argc, char** argv)
 	}
 
 	const Uint word_len = mystrlen(argv[1]);
-	Buffer buffer ( word_len + 1 );
+
+	char* const buffer = malloc(sizeof(char) * (word_len + 1));
 
 	if(buffer == NULL) {
 		perror("Failed to allocate memory: ");
@@ -54,18 +30,32 @@ int main(int argc, char** argv)
 	cpyback(buffer, argv[1], word_len);
 	buffer[word_len] = '\0';
 
-	for(Uint i = 0; i < print_times; ++i) {
-		puts(buffer);
+	for(Uint i = 0; i < PRINT_TIMES; ++i) 
+	{
+		if(puts(buffer) == EOF)
+		{
+			perror("puts failed");
+			exit_code = -1;
+			goto buffer_cleanup;
+		}
 	}
 
-	return 0;
+
+buffer_cleanup:
+	puts("WRITING BUFFER TO STDOUT");
+	fwrite(buffer, sizeof(char), word_len, stdout);
+	putchar('\n');
+	free(buffer);
+
+
+	return exit_code;
 }
 
 
 
 
 
-Uint mystrlen(const char* str) {
+inline Uint mystrlen(const char* str) {
 	Uint len = 0;
 	
 	while( *str != '\0' ) {
@@ -77,7 +67,7 @@ Uint mystrlen(const char* str) {
 }
 
 
-void cpyback(void* dest, const void* src, Uint size) {
+inline void cpyback(void* dest, const void* src, Uint size) {
 	char* _dest = (char*) dest;
 	const char* _src = (const char*) src;
 	_src += size-1;

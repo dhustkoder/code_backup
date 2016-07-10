@@ -31,8 +31,14 @@ main(int argc, char** argv)
 	cpyback(buffer, argv[1], word_len);
 	buffer[word_len] = '\0';
 
-	for(i = 0; i < print_times; ++i) {
-		puts(buffer);
+	for(i = 0; i < print_times; ++i) 
+	{
+		if( puts(buffer) == EOF )
+		{
+			perror("puts failed: ");
+			free(buffer);
+			return -1;
+		}
 	}
 
 
