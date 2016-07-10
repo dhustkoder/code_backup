@@ -1,0 +1,1 @@
+g++ main.cpp restrict_obj.o -oCPP.exe -O3 -std=c++98 -pedantic-errors -Wall -Wextra
