@@ -10,4 +10,4 @@
 -fno-asynchronous-unwind-tables = don't generate unwind table in dwarf2 format, if supported. ( usualy off by default )
 
 -nodefaultlibs            = don't link default libraries
--lc = link libc
+-lc                       = link libc

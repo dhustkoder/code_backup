@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-/* C89 CODE */
+/* C89 / C90 / ANSI C CODE */
 
 typedef unsigned int Uint;
 

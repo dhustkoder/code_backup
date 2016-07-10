@@ -40,6 +40,7 @@ int main(int argc, char** argv)
 		}
 	}
 
+	// ........
 
 buffer_cleanup:
 	puts("WRITING BUFFER TO STDOUT");
