@@ -1,17 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 /* C89 / C90 / ANSI C CODE */
 
 typedef unsigned int Uint;
 
-
-Uint mystrlen();
-void cpyback();
+void cpy_reverse();
 
 main(int argc, char** argv)
 {
 	const Uint print_times = 10;
 	Uint i, word_len;
+	const char* word;
 	char* buffer;
 	
 	if( argc < 2 ) {
@@ -19,7 +20,8 @@ main(int argc, char** argv)
 		return -1;
 	}
 
-	word_len = mystrlen(argv[1]);
+	word = argv[1];
+	word_len = strlen(word);
 
 	buffer = malloc(sizeof(char) * (word_len + 1));
 
@@ -28,7 +30,7 @@ main(int argc, char** argv)
 		return -1;
 	}
 
-	cpyback(buffer, argv[1], word_len);
+	cpy_reverse(buffer, word, word_len);
 	buffer[word_len] = '\0';
 
 	for(i = 0; i < print_times; ++i) 
@@ -50,25 +52,14 @@ main(int argc, char** argv)
 
 
 
-Uint mystrlen(const char* str) {
-	Uint len = 0;
-	while( *str != '\0' ) {
-		++len;
-		++str;
-	}
-
-	return len;
-}
-
-
-void cpyback(void* dest, const void* src, Uint size) {
+void cpy_reverse(char* dest, const char* src, Uint size) {
 	Uint i;
-	char* _dest = (char*) dest;
-	const char* _src = (const char*) src;
-	_src += size-1;
+	src += size-1;
 
 	for( i = 0 ; i < size ; ++i ) {
-		*_dest++ = *_src--;	
+		*dest = *src;
+		++dest;
+		--src;
 	}
 
 }

@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 // C++11 CODE
 
 
-typedef unsigned int Uint;
 
-inline Uint mystrlen(const char*);
-inline void cpyback(void*, const void*, Uint);
+using Uint = unsigned int;
 
 template<class F>
 struct ScopeExit {
@@ -21,6 +21,7 @@ inline ScopeExit<F> MakeScopeExit(F&& f) {
 	return ScopeExit<F>(static_cast<F&&>(f));
 }
 
+inline void cpy_reverse(char*, const char*, Uint size);
 
 int main(int argc, char** argv)
 {
@@ -31,7 +32,8 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	const Uint word_len = mystrlen(argv[1]);
+	const char* const word = argv[1];
+	const Uint word_len = strlen(word);
 	char* const buffer = static_cast<char*>( malloc(sizeof(char) * ( word_len + 1 )) );
 
 	if(buffer == NULL) {
@@ -39,15 +41,9 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	const auto buffer_cleanup = MakeScopeExit([=] {
-		puts("WRITING BUFFER TO STDOUT");
-		fwrite(buffer, sizeof(char), word_len, stdout);
-		putchar('\n');
-		free(buffer); 
-	});
+	const auto buffer_cleanup = MakeScopeExit([=] { free(buffer); });
 
-
-	cpyback(buffer, argv[1], word_len);
+	cpy_reverse(buffer, argv[1], word_len);
 	buffer[word_len] = '\0';
 
 	for(Uint i = 0; i < PRINT_TIMES; ++i) 
@@ -63,29 +59,12 @@ int main(int argc, char** argv)
 	return 0;
 }
 
-
-
-
-
-inline Uint mystrlen(const char* str) {
-	Uint len = 0;
-	
-	while( *str != '\0' ) {
-		++len;
-		++str;
-	}
-
-	return len;
-}
-
-
-inline void cpyback(void* dest, const void* src, Uint size) {
-	char* _dest = static_cast<char*>(dest);
-	const char* _src = static_cast<const char*>(src);
-	_src += size-1;
-
+inline void cpy_reverse(char* dest, const char* src, Uint size) {
+	src += size-1;
 	for( Uint i = 0 ; i < size ; ++i ) {
-		*_dest++ = *_src--;	
+		*dest = *src;
+		++dest;
+		--src;	
 	}
 
 }

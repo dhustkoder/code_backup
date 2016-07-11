@@ -1,12 +1,9 @@
 #include <iostream>
-#include <vector>
+#include <string>
 #include <algorithm>
 // C++98 / C++03 CODE
 
 typedef unsigned int Uint;
-
-inline Uint mystrlen(const char*);
-inline std::vector<char> CreateReverseVector(const char* str);
 
 int main(int argc, char** argv) 
 {
@@ -22,12 +19,11 @@ int main(int argc, char** argv)
 			return -1;
 		}
 
-		const std::vector<char> buffer = CreateReverseVector(argv[1]);
+		std::string word(argv[1]);
+		std::reverse(word.begin(), word.end());
 
-		for(Uint i = 0; i < print_times; ++i) {
-			cout << buffer.data() << '\n';
-		}
-
+		for(Uint i = 0; i < print_times; ++i)
+			cout << word << '\n';
 	}
 	catch(std::exception& e) {
 		cerr << "fatal error: " << e.what() << '\n';
@@ -35,25 +31,4 @@ int main(int argc, char** argv)
 	}
 
 	return 0;
-}
-
-
-
-
-Uint mystrlen(const char* str) {
-	Uint len = 0;
-	
-	while( *str != '\0' ) {
-		++len;
-		++str;
-	}
-
-	return len;
-}
-
-
-std::vector<char> CreateReverseVector(const char* str) {
-	std::vector<char> tmp ( str, str + mystrlen(str) );
-	std::reverse(tmp.begin(), tmp.end();
-	return tmp;
 }
