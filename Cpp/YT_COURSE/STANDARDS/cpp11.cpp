@@ -19,14 +19,14 @@ int main(int argc, char** argv)
 			return -1;
 		}
 
-		const auto word = [argv] {
+		const auto reverse_word = [argv] {
 			std::string tmp(argv[1]);
 			std::reverse(tmp.begin(), tmp.end());
 			return tmp;
 		}();
 
 		for(Uint i = 0; i < print_times; ++i)
-			cout << word << '\n';
+			cout << reverse_word << '\n';
 	}
 	catch(std::exception& e) {
 		cerr << "Fatal error: " << e.what() << '\n';
