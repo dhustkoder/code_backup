@@ -6,11 +6,22 @@
 
 typedef unsigned int Uint;
 
+namespace {
+
 struct ScopeFree {
 	ScopeFree(void* p) : m_p(p) { }
-	~ScopeFree() { free(m_p); }
-	void* const m_p;
+	~ScopeFree() { free(m_p); printf("buffer freed\n"); }
+	void* m_p;
 };
+
+struct ScopeFClose {
+	ScopeFClose(FILE* f) : m_f(f) {}
+	~ScopeFClose() { fclose(m_f); printf("file closed\n"); }
+	FILE* m_f;
+};
+
+}
+
 
 inline void cpy_reverse(char* dest, const char* src, Uint size);
 
@@ -32,20 +43,32 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	const ScopeFree buffer_cleanup( buffer );
+	const ScopeFree free_buffer( buffer );
 
 	cpy_reverse(buffer, word, word_len);
 	buffer[word_len] = '\0';
 
 	for(Uint i = 0; i < print_times; ++i)
 	{
-		if( puts(buffer) == EOF ) 
-		{
+		if( puts(buffer) == EOF ) {
 			perror("puts failed: ");
-			return -1;
+			break;
 		}
 	}
 
+	FILE* const file = fopen("savefile.txt", "w");
+	if(file == NULL) {
+		perror("failed to create savefile.txt: ");
+		return -1;
+	}
+
+	const ScopeFClose close_file(file);
+
+	fwrite(buffer, sizeof(char), word_len, file);
+	if(ferror(file)) {
+		perror("fwrite failed: ");
+		return -1;
+	}
 
 	return 0;
 }
@@ -58,3 +81,7 @@ inline void cpy_reverse(char* dest, const char* src, Uint size) {
 		--src;
 	}
 }
+
+
+
+

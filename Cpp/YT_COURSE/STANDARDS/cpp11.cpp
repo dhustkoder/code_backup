@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <fstream>
 // C++11 CODE
 
 using Uint = unsigned int;
@@ -9,7 +10,7 @@ int main(int argc, char** argv)
 {
 	using std::cout;
 	using std::cerr;
-	
+
 	try {		
 
 		constexpr Uint print_times = 10;
@@ -25,11 +26,23 @@ int main(int argc, char** argv)
 			return tmp;
 		}();
 
-		for(Uint i = 0; i < print_times; ++i)
-			cout << reverse_word << '\n';
+
+		try {
+			for(Uint i = 0; i < print_times; ++i)
+				cout << reverse_word << '\n';
+		}
+		catch(std::exception& e) {
+			cerr << "cout failed: " << e.what() << '\n';
+		}
+
+		std::ofstream file("savefile.txt");
+		if(file.good() == false)
+			throw std::runtime_error("failed to create savefile.txt");
+
+		file << reverse_word;
 	}
 	catch(std::exception& e) {
-		cerr << "Fatal error: " << e.what() << '\n';
+		cerr << "Fatal Exception: " << e.what() << '\n';
 		return -1;
 	}
 

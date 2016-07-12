@@ -41,18 +41,38 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	const auto buffer_cleanup = MakeScopeExit([=] { free(buffer); });
+	const auto buffer_cleanup = MakeScopeExit([buffer] { 
+		free(buffer);
+		printf("buffer freed\n");
+	});
 
 	cpy_reverse(buffer, argv[1], word_len);
 	buffer[word_len] = '\0';
 
 	for(Uint i = 0; i < PRINT_TIMES; ++i) 
 	{
-		if( puts(buffer) == EOF ) 
-		{
+		if( puts(buffer) == EOF ) {
 			perror("puts failed: ");
-			return -1;
+			break;
 		}
+	}
+
+	FILE* const file = fopen("savefile.txt", "w");
+	
+	if(file == nullptr) {
+		perror("failed to create savefile.txt: ");
+		return -1;
+	}
+
+	const auto close_file = MakeScopeExit([file] {
+		fclose(file);
+		printf("file closed\n");
+	});
+
+	fwrite(buffer, sizeof(char), word_len, file);
+	if(ferror(file)) {
+		perror("fwrite failed: ");
+		return -1;
 	}
 
 
