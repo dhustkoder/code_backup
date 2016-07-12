@@ -73,6 +73,10 @@ free_buffer:
 
 void cpy_reverse(char* dest, const char* src, Uint size) {
 	Uint i;
+
+	if(size == 0 )
+		return;
+
 	src += size-1;
 
 	for( i = 0 ; i < size ; ++i ) {
@@ -80,5 +84,4 @@ void cpy_reverse(char* dest, const char* src, Uint size) {
 		++dest;
 		--src;
 	}
-
 }
